@@ -91,7 +91,7 @@ func New(db *store.Store) http.Handler {
 }
 
 func (a app) render(w http.ResponseWriter, r *http.Request, status int, data page) {
-	if data.Plans == nil {
+	if data.Screen == "plans" && data.Plans == nil {
 		plans, err := a.store.Plans(r.Context())
 		if err != nil {
 			serverError(w, err)

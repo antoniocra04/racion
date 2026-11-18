@@ -3,22 +3,26 @@
     <div><h1>Мои продукты</h1><p class="subtitle">КБЖУ на 100 г</p></div>
     <a class="button primary" href="/products/new">Добавить продукт</a>
   </header>
+  {{if or .Products .Query}}
   <form action="/products" method="get" class="search">
     <label for="query" class="visually-hidden">Поиск по названию</label>
     <input type="search" id="query" name="q" value="{{.Query}}" placeholder="Название продукта">
     <button type="submit" class="button">Найти</button>
     {{if .Query}}<a class="button quiet" href="/products">Сбросить</a>{{end}}
   </form>
+  {{end}}
   {{if .Products}}
-  <ul class="records">
+  <ul class="records product-records">
     {{range .Products}}
     <li>
-      <div>
-        <a class="record-title" href="/products/{{.ID}}/edit">{{.Name}}</a>
-        {{with .State}} <span class="muted">· {{.}}</span>{{end}}
-        <p class="record-meta">{{template "compact-nutrition" .Per100}}</p>
-      </div>
-      <a class="button quiet" href="/products/{{.ID}}/edit">Изменить</a>
+      <a class="product-record" href="/products/{{.ID}}/edit">
+        <div>
+          <span class="record-title">{{.Name}}</span>
+          {{with .State}} <span class="muted">· {{.}}</span>{{end}}
+          <p class="record-meta">{{template "compact-nutrition" .Per100}}</p>
+        </div>
+        <span class="disclosure" aria-hidden="true"></span>
+      </a>
     </li>
     {{end}}
   </ul>
@@ -28,7 +32,6 @@
 
 {{define "product"}}
   <div class="form-page">
-    <a class="back" href="/products">Все продукты</a>
     <h1>{{.Title}}</h1>
     {{if .Error}}<p class="notice" role="alert">{{.Error}}</p>{{end}}
     <form action="/products/save" method="post" class="form-flow">

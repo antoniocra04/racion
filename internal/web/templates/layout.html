@@ -21,9 +21,6 @@
         <a href="/plans" {{if eq .Screen "plans"}}aria-current="page"{{end}}>Версии</a>
         <a href="/products" {{if or (eq .Screen "products") (eq .Screen "product")}}aria-current="page"{{end}}>Продукты</a>
       </nav>
-      {{if and .Plans (ne .Screen "day")}}
-        {{template "plan-switcher" .Plans}}
-      {{end}}
       {{if and (eq .Screen "day") .Plan}}
         <a class="button day-edit-mobile" href="/plans/{{.Plan.ID}}/edit">Изменить</a>
       {{end}}

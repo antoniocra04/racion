@@ -69,6 +69,16 @@ func TestRationWorkflow(t *testing.T) {
 	draft.Set("grams_0", "200")
 	check(t, request(handler, "POST", "/plans/editor", draft), 303, "")
 	check(t, request(handler, "GET", "/", nil), 200, "180", "Основной")
+	versions := request(handler, "GET", "/plans", nil)
+	check(t, versions, 200, "Сделать активным", "Тренировочный")
+	if strings.Contains(versions.Body.String(), "data-switcher") {
+		t.Fatal("the versions list should use its own activation buttons")
+	}
+	edit := request(handler, "GET", "/plans/1/edit", nil)
+	if strings.Count(edit.Body.String(), ">Сохранить рацион</button>") != 1 ||
+		strings.Contains(edit.Body.String(), "data-switcher") {
+		t.Fatal("the editor needs one save action and no version switch")
+	}
 
 	product.Set("id", "1")
 	product.Set("revision", "1")
@@ -102,6 +112,29 @@ func TestEditorKeepsDraftAndAddsProduct(t *testing.T) {
 	}
 	defer db.Close()
 	handler := web.New(db)
+	newPlan := request(handler, "GET", "/plans/new", nil)
+	if strings.Count(newPlan.Body.String(), ">Сохранить рацион</button>") != 1 {
+		t.Fatal("the create screen needs exactly one save action")
+	}
+	check(t, newPlan, 200, `value="add-new-product:0"`, "Создать первый продукт")
+
+	firstProduct := url.Values{"intent": {"add-new-product:0"}, "name": {"Основной"}, "meal_name": {"Завтрак"}}
+	inline := request(handler, "POST", "/plans/editor", firstProduct)
+	check(t, inline, 200, `value="save-product:0:0"`, `name="inline_added_item" value="0:0"`, "Расчётная калорийность")
+	if strings.Count(inline.Body.String(), `value="save-product:0:0"`) != 1 ||
+		strings.Contains(inline.Body.String(), ">Сохранить рацион</button>") {
+		t.Fatal("an open product form should have only its own save action")
+	}
+	firstProduct.Set("product_0", "")
+	firstProduct.Set("grams_0", "")
+	firstProduct.Set("inline_added_item", "0:0")
+	firstProduct.Set("intent", "cancel-product:0:0")
+	back := request(handler, "POST", "/plans/editor", firstProduct)
+	check(t, back, 200, "Основной", "Завтрак", "Создать первый продукт")
+	if strings.Contains(back.Body.String(), `name="product_0"`) {
+		t.Fatal("cancelling creation of the first product should leave no blank row")
+	}
+
 	draft := url.Values{
 		"intent": {"new-product:0:0"}, "name": {"Основной"}, "meal_name": {"Завтрак"},
 		"product_0": {""}, "grams_0": {"125,5"},
@@ -121,6 +154,9 @@ func TestEditorKeepsDraftAndAddsProduct(t *testing.T) {
 	check(t, catalog, 200, "60 ккал")
 	if strings.Count(catalog.Body.String(), `class="record-title"`) != 1 {
 		t.Fatal("resubmitting the inline form created a second product")
+	}
+	if strings.Count(catalog.Body.String(), `href="/products/1/edit"`) != 1 {
+		t.Fatal("each product should have a single entry point to its editor")
 	}
 	draft.Set("intent", "save")
 	draft.Set("product_0", "999")

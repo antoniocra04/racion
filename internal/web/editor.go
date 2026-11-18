@@ -32,26 +32,28 @@ type mealDraft struct {
 }
 
 type itemDraft struct {
-	ProductID string
-	Grams     string
-	Error     string
+	ProductID    string
+	Grams        string
+	ProductError string
+	WeightError  string
 }
 
 type inlineProduct struct {
 	Meal, Item int
+	AddedItem  bool
 	Form       productForm
 }
 
 func (a app) openEditor(w http.ResponseWriter, r *http.Request) {
-	plans, err := a.store.Plans(r.Context())
-	if err != nil {
-		serverError(w, err)
-		return
-	}
-	data := page{Screen: "editor", Plans: plans}
+	var data page
 	if r.PathValue("id") == "" {
 		data.Draft.Meals = []mealDraft{{Name: "Завтрак"}}
 	} else {
+		plans, err := a.store.Plans(r.Context())
+		if err != nil {
+			serverError(w, err)
+			return
+		}
 		plan := findPlan(plans, pathID(r))
 		if plan == nil {
 			a.fail(w, r, store.ErrNotFound)
@@ -119,11 +121,16 @@ func (a app) updateEditor(w http.ResponseWriter, r *http.Request) {
 		data.Draft.Meals = append(data.Draft.Meals, mealDraft{})
 	case action == "remove-meal" && mealOK:
 		data.Draft.Meals = remove(draft.Meals, mealIndex)
-	case action == "cancel-product":
-		// The product was never written. The rest of the draft stays intact.
-	case action == "add-item" && mealOK && len(draft.Meals[mealIndex].Items) < maxItems:
+	case action == "cancel-product" && position == "":
+		// Forms opened before this version did not send an item index.
+	case (action == "add-item" || action == "add-new-product") && mealOK && len(draft.Meals[mealIndex].Items) < maxItems:
 		meal := &data.Draft.Meals[mealIndex]
 		meal.Items = append(meal.Items, itemDraft{})
+		if action == "add-new-product" {
+			data.Inline = &inlineProduct{
+				Meal: mealIndex, Item: len(meal.Items) - 1, AddedItem: true, Form: newProductForm("product_name"),
+			}
+		}
 	case mealOK:
 		meal := &data.Draft.Meals[mealIndex]
 		itemIndex, ok := indexOf(itemText, len(meal.Items))
@@ -131,15 +138,22 @@ func (a app) updateEditor(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, "Позиция не найдена.", http.StatusBadRequest)
 			return
 		}
+		item := &meal.Items[itemIndex]
+		addedItem := r.PostForm.Get("inline_added_item") == position && itemIndex == len(meal.Items)-1 &&
+			item.ProductID == "" && item.Grams == ""
 		switch action {
 		case "remove-item":
 			meal.Items = remove(meal.Items, itemIndex)
+		case "cancel-product":
+			if addedItem {
+				meal.Items = meal.Items[:itemIndex]
+			}
 		case "new-product":
 			data.Inline = &inlineProduct{Meal: mealIndex, Item: itemIndex, Form: newProductForm("product_name")}
 		case "save-product":
 			product, form, valid := readProduct(r, "product_name")
 			if !valid {
-				data.Inline = &inlineProduct{Meal: mealIndex, Item: itemIndex, Form: form}
+				data.Inline = &inlineProduct{Meal: mealIndex, Item: itemIndex, AddedItem: addedItem, Form: form}
 				status = http.StatusUnprocessableEntity
 				break
 			}
@@ -148,7 +162,7 @@ func (a app) updateEditor(w http.ResponseWriter, r *http.Request) {
 				a.fail(w, r, err)
 				return
 			}
-			meal.Items[itemIndex].ProductID = strconv.FormatInt(id, 10)
+			item.ProductID = strconv.FormatInt(id, 10)
 		default:
 			http.Error(w, "Неизвестное действие.", http.StatusBadRequest)
 			return
@@ -231,13 +245,13 @@ func (d *planDraft) validate() (ration.Plan, bool) {
 			item := &draftMeal.Items[j]
 			id, err := strconv.ParseInt(item.ProductID, 10, 64)
 			amount, ok := decimal(item.Grams)
-			switch {
-			case err != nil || id < 1:
-				item.Error = "Выбери продукт."
-			case !ok || amount <= 0:
-				item.Error = "Укажи вес больше 0 и не больше 1 000 000 г."
+			if err != nil || id < 1 {
+				item.ProductError = "Выбери продукт."
 			}
-			valid = valid && item.Error == ""
+			if !ok || amount <= 0 {
+				item.WeightError = "Укажи вес больше 0 и не больше 1 000 000 г."
+			}
+			valid = valid && item.ProductError == "" && item.WeightError == ""
 			meal.Items = append(meal.Items, ration.Item{Product: ration.Product{ID: id}, Grams: amount})
 		}
 		plan.Meals = append(plan.Meals, meal)
