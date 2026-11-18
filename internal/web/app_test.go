@@ -2,6 +2,7 @@ package web_test
 
 import (
 	"context"
+	"database/sql"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
@@ -24,12 +25,27 @@ func TestRationWorkflow(t *testing.T) {
 	handler := web.New(db)
 	check(t, request(handler, "GET", "/", nil), 200, "Создать рацион")
 
+	form := request(handler, "GET", "/products/new", nil)
+	check(t, form, 200, "Расчётная калорийность")
+	if strings.Contains(form.Body.String(), `name="kcal"`) {
+		t.Fatal("calories should not be an editable field")
+	}
 	product := url.Values{
-		"name": {"Курица"}, "state": {"готовый"}, "kcal": {"120"}, "protein": {"10"},
+		"name": {"Курица"}, "state": {"готовый"}, "protein": {"10"},
 		"fat": {"4"}, "carbs": {"11,0"},
 	}
 	check(t, request(handler, "POST", "/products/save", product), 303, "")
-	check(t, request(handler, "GET", "/products?q=КУРИЦА", nil), 200, "Курица")
+
+	// Simulate a product saved by the old version with a calorie value from the label.
+	legacy, err := sql.Open("sqlite", dbPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer legacy.Close()
+	if _, err := legacy.ExecContext(ctx, "UPDATE products SET kcal = 900 WHERE id = 1"); err != nil {
+		t.Fatal(err)
+	}
+	check(t, request(handler, "GET", "/products?q=КУРИЦА", nil), 200, "Курица", "120 ккал")
 
 	draft := url.Values{
 		"intent": {"save"}, "name": {"Основной"}, "meal_name": {"Обед"},
@@ -56,10 +72,11 @@ func TestRationWorkflow(t *testing.T) {
 
 	product.Set("id", "1")
 	product.Set("revision", "1")
-	product.Set("kcal", "140")
+	product.Set("protein", "15")
+	product.Set("kcal", "999")
 	check(t, request(handler, "POST", "/products/save", product), 303, "")
-	product.Set("kcal", "120")
-	check(t, request(handler, "POST", "/products/save", product), 409, "120")
+	product.Set("protein", "10")
+	check(t, request(handler, "POST", "/products/save", product), 409, `name="protein" inputmode="decimal" value="10"`, "120")
 	check(t, request(handler, "GET", "/plans/1", nil), 200, "210", "150 г")
 	check(t, request(handler, "GET", "/plans/2", nil), 200, "280", "200 г")
 	check(t, request(handler, "POST", "/plans/activate", url.Values{"id": {"2"}}), 303, "")
@@ -93,7 +110,6 @@ func TestEditorKeepsDraftAndAddsProduct(t *testing.T) {
 	draft.Set("intent", "save-product:0:0")
 	draft.Set("product_token", "P4I42N5RO7VRPAJ6XK64VP7MRY")
 	draft.Set("product_name", "Рис")
-	draft.Set("kcal", "100")
 	draft.Set("protein", "0")
 	draft.Set("fat", "-1")
 	draft.Set("carbs", "15")
@@ -102,6 +118,7 @@ func TestEditorKeepsDraftAndAddsProduct(t *testing.T) {
 	check(t, request(handler, "POST", "/plans/editor", draft), 200, "125,5", "Рис", "selected")
 	check(t, request(handler, "POST", "/plans/editor", draft), 200, "125,5", "Рис", "selected")
 	catalog := request(handler, "GET", "/products", nil)
+	check(t, catalog, 200, "60 ккал")
 	if strings.Count(catalog.Body.String(), `class="record-title"`) != 1 {
 		t.Fatal("resubmitting the inline form created a second product")
 	}

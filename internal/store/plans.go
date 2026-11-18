@@ -13,7 +13,7 @@ func (s *Store) Plans(ctx context.Context) ([]ration.Plan, error) {
 		SELECT plans.id, plans.name, plans.revision, COALESCE(plans.id = settings.active_plan_id, 0),
 		       COALESCE(meals.id, 0), COALESCE(meals.name, ''),
 		       COALESCE(products.id, 0), COALESCE(products.name, ''), COALESCE(products.state, ''),
-		       COALESCE(products.kcal, 0), COALESCE(products.protein, 0), COALESCE(products.fat, 0),
+		       COALESCE(products.protein, 0), COALESCE(products.fat, 0),
 		       COALESCE(products.carbs, 0), COALESCE(meal_items.grams, 0)
 		FROM plans CROSS JOIN settings
 		LEFT JOIN meals ON meals.plan_id = plans.id
@@ -33,7 +33,7 @@ func (s *Store) Plans(ctx context.Context) ([]ration.Plan, error) {
 		var item ration.Item
 		p := &item.Product
 		if err := rows.Scan(&plan.ID, &plan.Name, &plan.Revision, &plan.Active,
-			&mealID, &meal.Name, &p.ID, &p.Name, &p.State, &p.Per100.Kcal, &p.Per100.Protein,
+			&mealID, &meal.Name, &p.ID, &p.Name, &p.State, &p.Per100.Protein,
 			&p.Per100.Fat, &p.Per100.Carbs, &item.Grams); err != nil {
 			return nil, err
 		}

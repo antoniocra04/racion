@@ -1,19 +1,28 @@
 package ration
 
-// Nutrition describes the energy and macronutrients of a quantity of food.
+const (
+	ProteinKcalPerGram = 4
+	FatKcalPerGram     = 9
+	CarbsKcalPerGram   = 4
+)
+
+// Nutrition describes the macronutrients of a quantity of food.
 type Nutrition struct {
-	Kcal    float64
 	Protein float64
 	Fat     float64
 	Carbs   float64
 }
 
+func (n Nutrition) Kcal() float64 {
+	return n.Protein*ProteinKcalPerGram + n.Fat*FatKcalPerGram + n.Carbs*CarbsKcalPerGram
+}
+
 func (n Nutrition) scale(factor float64) Nutrition {
-	return Nutrition{n.Kcal * factor, n.Protein * factor, n.Fat * factor, n.Carbs * factor}
+	return Nutrition{n.Protein * factor, n.Fat * factor, n.Carbs * factor}
 }
 
 func (n Nutrition) add(other Nutrition) Nutrition {
-	return Nutrition{n.Kcal + other.Kcal, n.Protein + other.Protein, n.Fat + other.Fat, n.Carbs + other.Carbs}
+	return Nutrition{n.Protein + other.Protein, n.Fat + other.Fat, n.Carbs + other.Carbs}
 }
 
 type Product struct {

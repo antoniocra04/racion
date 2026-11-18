@@ -69,16 +69,17 @@
     </select>
     {{with .Errors.state}}<p id="product-state-error" class="field-error">{{.}}</p>{{end}}
   </div>
-  <fieldset class="nutrition-fields">
+  <fieldset class="nutrition-fields" data-calorie-preview>
     <legend>Пищевая ценность на 100 г</legend>
     <div class="number-fields">
       {{range .Numbers}}
       <div class="field">
         <label for="product-{{.Key}}">{{.Label}}</label>
-        <input id="product-{{.Key}}" name="{{.Key}}" inputmode="decimal" value="{{.Value}}" maxlength="16" placeholder="0"{{if .Error}} aria-invalid="true" aria-describedby="error-{{.Key}}"{{end}}>
+        <input id="product-{{.Key}}" name="{{.Key}}" inputmode="decimal" value="{{.Value}}" maxlength="16" placeholder="0" data-kcal-per-gram="{{.KcalPerGram}}"{{if .Error}} aria-invalid="true" aria-describedby="error-{{.Key}}"{{end}}>
         {{if .Error}}<p id="error-{{.Key}}" class="field-error">{{.Error}}</p>{{end}}
       </div>
       {{end}}
     </div>
+    <p class="calorie-preview">Расчётная калорийность <output for="product-protein product-fat product-carbs"><strong data-calorie-result>{{.Energy}}</strong> ккал</output></p>
   </fieldset>
 {{end}}

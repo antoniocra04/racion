@@ -9,7 +9,7 @@ import (
 )
 
 func (s *Store) Products(ctx context.Context) ([]ration.Product, error) {
-	rows, err := s.db.QueryContext(ctx, "SELECT id, revision, name, state, kcal, protein, fat, carbs FROM products ORDER BY id")
+	rows, err := s.db.QueryContext(ctx, "SELECT id, revision, name, state, protein, fat, carbs FROM products ORDER BY id")
 	if err != nil {
 		return nil, err
 	}
@@ -27,7 +27,7 @@ func (s *Store) Products(ctx context.Context) ([]ration.Product, error) {
 
 func (s *Store) Product(ctx context.Context, id int64) (ration.Product, error) {
 	product, err := scanProduct(s.db.QueryRowContext(ctx,
-		"SELECT id, revision, name, state, kcal, protein, fat, carbs FROM products WHERE id = ?", id))
+		"SELECT id, revision, name, state, protein, fat, carbs FROM products WHERE id = ?", id))
 	if errors.Is(err, sql.ErrNoRows) {
 		return product, ErrNotFound
 	}
@@ -36,12 +36,13 @@ func (s *Store) Product(ctx context.Context, id int64) (ration.Product, error) {
 
 func scanProduct(row interface{ Scan(...any) error }) (ration.Product, error) {
 	var p ration.Product
-	err := row.Scan(&p.ID, &p.Revision, &p.Name, &p.State, &p.Per100.Kcal, &p.Per100.Protein, &p.Per100.Fat, &p.Per100.Carbs)
+	err := row.Scan(&p.ID, &p.Revision, &p.Name, &p.State, &p.Per100.Protein, &p.Per100.Fat, &p.Per100.Carbs)
 	return p, err
 }
 
 func (s *Store) SaveProduct(ctx context.Context, p ration.Product, creationToken string) (int64, error) {
-	values := []any{p.Name, p.State, p.Per100.Kcal, p.Per100.Protein, p.Per100.Fat, p.Per100.Carbs}
+	// Keep the required kcal column populated for compatibility with existing SQLite files.
+	values := []any{p.Name, p.State, p.Per100.Kcal(), p.Per100.Protein, p.Per100.Fat, p.Per100.Carbs}
 	if p.ID == 0 {
 		var id int64
 		err := s.db.QueryRowContext(ctx, `

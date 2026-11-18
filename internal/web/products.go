@@ -21,14 +21,16 @@ type productForm struct {
 	Name      string
 	State     string
 	Numbers   []numberField
+	Energy    string
 	Errors    map[string]string
 }
 
 type numberField struct {
-	Key   string
-	Label string
-	Value string
-	Error string
+	Key         string
+	Label       string
+	KcalPerGram int
+	Value       string
+	Error       string
 }
 
 func newProductForm(nameField string) productForm {
@@ -36,11 +38,11 @@ func newProductForm(nameField string) productForm {
 		NameField: nameField,
 		Token:     rand.Text(),
 		Numbers: []numberField{
-			{Key: "kcal", Label: "Калории, ккал"},
-			{Key: "protein", Label: "Белки, г"},
-			{Key: "fat", Label: "Жиры, г"},
-			{Key: "carbs", Label: "Углеводы, г"},
+			{Key: "protein", Label: "Белки, г", KcalPerGram: ration.ProteinKcalPerGram},
+			{Key: "fat", Label: "Жиры, г", KcalPerGram: ration.FatKcalPerGram},
+			{Key: "carbs", Label: "Углеводы, г", KcalPerGram: ration.CarbsKcalPerGram},
 		},
+		Energy: "—",
 		Errors: make(map[string]string),
 	}
 }
@@ -80,10 +82,11 @@ func (a app) openProduct(w http.ResponseWriter, r *http.Request) {
 		}
 		title = "Изменить продукт"
 		form.ID, form.Revision, form.Name, form.State = product.ID, product.Revision, product.Name, product.State
-		values := []float64{product.Per100.Kcal, product.Per100.Protein, product.Per100.Fat, product.Per100.Carbs}
+		values := []float64{product.Per100.Protein, product.Per100.Fat, product.Per100.Carbs}
 		for i, value := range values {
 			form.Numbers[i].Value = formNumber(value)
 		}
+		form.Energy = calories(product.Per100.Kcal())
 	}
 	a.render(w, r, http.StatusOK, page{Title: title, Screen: "product", Product: form})
 }
@@ -139,7 +142,7 @@ func readProduct(r *http.Request, nameField string) (ration.Product, productForm
 	default:
 		form.Errors["state"] = "Выбери состояние из списка."
 	}
-	fields := []*float64{&product.Per100.Kcal, &product.Per100.Protein, &product.Per100.Fat, &product.Per100.Carbs}
+	fields := []*float64{&product.Per100.Protein, &product.Per100.Fat, &product.Per100.Carbs}
 	missingNumber := false
 	for index := range form.Numbers {
 		field := &form.Numbers[index]
@@ -150,6 +153,9 @@ func readProduct(r *http.Request, nameField string) (ration.Product, productForm
 			missingNumber = true
 		}
 		*fields[index] = value
+	}
+	if !missingNumber {
+		form.Energy = calories(product.Per100.Kcal())
 	}
 	return product, form, len(form.Errors) == 0 && !missingNumber
 }

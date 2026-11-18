@@ -367,7 +367,9 @@ input[aria-invalid], select[aria-invalid] { border-color: var(--error); }
 .field label, .nutrition-fields legend { font-size: .875rem; font-weight: 640; }
 .nutrition-fields { min-width: 0; margin: 0; padding: .65rem 0 0; border: 0; }
 .nutrition-fields legend { padding: 0; }
-.number-fields { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .65rem; }
+.number-fields { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .65rem; }
+.calorie-preview { margin-top: .65rem; color: var(--muted); font-size: .875rem; }
+.calorie-preview output { margin-inline-start: .35rem; color: var(--ink); white-space: nowrap; }
 .field-error { color: var(--error); font-size: .875rem; }
 .notice { margin-block: .85rem; padding: .75rem 1rem; border: 1px solid currentColor; background: var(--error-bg); color: var(--error); }
 .editor { max-width: 54rem; }
