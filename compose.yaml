@@ -1,0 +1,14 @@
+services:
+  ration:
+    build: .
+    ports:
+      - "${RATION_BIND_IP:-0.0.0.0}:${RATION_PORT:-8080}:8080"
+    volumes:
+      - ration-data:/data
+    read_only: true
+    tmpfs:
+      - /tmp
+    restart: unless-stopped
+
+volumes:
+  ration-data:

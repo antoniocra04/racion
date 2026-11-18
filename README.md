@@ -4,9 +4,84 @@
 
 Карточка продукта хранит КБЖУ на 100 г. Сохранённые рационы ссылаются на карточки, поэтому правка карточки пересчитывает все связанные рационы. Граммовки хранятся отдельно для каждой версии.
 
-## Запуск на компьютере
+## Запуск на Raspberry Pi 5
 
-Нужен Go 1.26 или новее. Из корня репозитория выполните:
+На 64-битной Raspberry Pi OS установите Docker Engine с плагином Compose. [Инструкция для ARM64](https://docs.docker.com/engine/install/debian/#install-using-the-apt-repository)
+
+```sh
+git clone https://github.com/antoniocra04/racion.git
+cd racion
+docker compose up -d --build
+```
+
+С телефона в домашней сети откройте `http://<локальный-IP-Pi>:8080`. При необходимости задайте порт через `RATION_PORT`, а адрес интерфейса Pi через `RATION_BIND_IP` в файле `.env` рядом с `compose.yaml`. Приложение рассчитано на доверенную домашнюю сеть. Оставьте проброс порта на роутере выключенным.
+
+Docker Compose собирает образ под архитектуру Pi. Контейнер работает от отдельного пользователя. База `/data/ration.db` хранится в томе `ration-data` и сохраняется при пересоздании контейнера.
+
+Обновление выполняется из папки проекта.
+
+```sh
+git pull --ff-only
+docker compose up -d --build
+```
+
+Команды `docker compose stop` и `docker compose down` сохраняют том. Флаг `-v` у `down` удаляет том с базой.
+
+## Резервная копия
+
+Снимок можно выгрузить из работающего контейнера. Скопируйте полученный файл на другое устройство.
+
+```sh
+(
+  set -e
+  backup="ration-$(date +%Y%m%d-%H%M%S).db"
+  partial=$(mktemp "./.$backup.XXXXXX")
+  trap 'rm -f "$partial"' EXIT
+  docker compose exec -T ration /usr/local/bin/ration -db /data/ration.db -backup "/tmp/$backup"
+  docker compose exec -T ration cat "/tmp/$backup" > "$partial"
+  ln "$partial" "./$backup"
+  docker compose exec -T ration rm "/tmp/$backup"
+  printf 'Резервная копия: %s\n' "$backup"
+)
+```
+
+Для восстановления укажите путь к своей копии. Команда сохраняет прежнюю базу для отката.
+
+```sh
+backup=./ration-backup.db
+test -s "$backup" &&
+  docker compose stop ration &&
+  docker compose run --rm --no-deps -T --entrypoint sh ration -ec '
+    umask 077
+    temp=$(mktemp /data/restore.XXXXXX)
+    trap "rm -f \"$temp\"" EXIT
+    cat > "$temp"
+    test -s "$temp"
+    if [ -f /data/ration.db ]; then
+      previous=$(mktemp /data/ration-before-restore.XXXXXX)
+      cp /data/ration.db "$previous"
+      printf "Previous database saved at %s\n" "$previous"
+    fi
+    mv -f "$temp" /data/ration.db
+  ' < "$backup" &&
+  docker compose up -d
+```
+
+После запуска проверьте название активного рациона, его продукты и КБЖУ.
+
+Если приложение уже было установлено как служба, остановите её и выгрузите существующую базу перед запуском Compose.
+
+```sh
+sudo systemctl stop ration
+sudo /usr/local/bin/ration -db /var/lib/ration/ration.db -backup "$PWD/ration-migration.db"
+sudo chown "$(id -u):$(id -g)" ration-migration.db
+```
+
+Запустите Compose и восстановите `ration-migration.db` по инструкции выше. После проверки отключите автозапуск старой службы командой `sudo systemctl disable ration`.
+
+## Локальная разработка
+
+Для локальной разработки нужен Go 1.26 или новее.
 
 ```sh
 go run ./cmd/ration
@@ -16,50 +91,4 @@ go run ./cmd/ration
 
 ```sh
 go test ./...
-```
-
-## Raspberry Pi 5
-
-Подойдёт 64-битная Raspberry Pi OS. Соберите бинарник Linux ARM64 на компьютере и скопируйте его вместе с `deploy/ration.service` на Pi:
-
-```sh
-CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -o ration ./cmd/ration
-```
-
-На Raspberry Pi установите файлы и запустите сервис:
-
-```sh
-sudo install -m 0755 ration /usr/local/bin/ration
-sudo install -m 0644 ration.service /etc/systemd/system/ration.service
-sudo systemctl daemon-reload
-sudo systemctl enable --now ration
-```
-
-С телефона в домашней сети откройте `http://<локальный-IP-Pi>:8080`. Закрепите IP Pi в настройках роутера. Приложение рассчитано на доверенную домашнюю сеть с общим доступом к одному рациону. Для порта 8080 используйте входящий доступ только из домашней сети и оставьте проброс порта на роутере выключенным.
-
-`systemd` запускает приложение под отдельным пользователем. Файл базы хранится в `/var/lib/ration/ration.db`. Все ресурсы интерфейса находятся в бинарнике.
-
-## Резервная копия
-
-Команда создаёт согласованную копию работающей базы по новому пути. Каталог назначения должен существовать:
-
-```sh
-sudo /usr/local/bin/ration -db /var/lib/ration/ration.db -backup /var/backups/ration-2026-11-18.db
-```
-
-Храните копию на другом устройстве. Для проверки скопируйте файл `ration-2026-11-18.db` с Pi в корень проекта на компьютере и запустите приложение на другом порту:
-
-```sh
-test -f ./ration-2026-11-18.db && go run ./cmd/ration -addr 127.0.0.1:8081 -db ./ration-2026-11-18.db
-```
-
-На [127.0.0.1:8081](http://127.0.0.1:8081) проверьте название активного рациона, его продукты и итоговые КБЖУ.
-
-Для восстановления на Pi остановите сервис, сохраните прежнюю базу под отдельным именем и верните копию на путь рабочей базы. Сохраните владельца и права файла, затем запустите сервис.
-
-```sh
-sudo systemctl stop ration
-sudo cp -a /var/lib/ration/ration.db /var/lib/ration/ration-before-restore.db
-sudo cp /var/backups/ration-2026-11-18.db /var/lib/ration/ration.db
-sudo systemctl start ration
 ```

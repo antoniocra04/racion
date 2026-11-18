@@ -1,0 +1,8 @@
+.git
+.env
+data/
+ration
+**/*.db
+**/*.db-shm
+**/*.db-wal
+**/*.db-journal
