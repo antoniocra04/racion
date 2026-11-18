@@ -4,25 +4,20 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#17392b">
+  <meta name="theme-color" content="#27388f" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#283776" media="(prefers-color-scheme: dark)">
   <title>{{.Title}} · Рацион</title>
   <link rel="stylesheet" href="/static/app.css">
   <script defer src="/static/app.js"></script>
 </head>
 <body>
+  {{designContract}}
   <a class="skip" href="#main">К содержимому</a>
   <header class="topbar">
     <div class="frame header-grid">
-      <a href="/" class="brand">
-        <span class="brand-mark" aria-hidden="true">
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.55" stroke-linecap="round">
-            <circle cx="12" cy="12" r="8.4"/><circle cx="12" cy="12" r="5.1"/><path d="M12 7v5l4 3"/>
-          </svg>
-        </span>
-        Рацион
-      </a>
+      <a href="/" class="brand">Рацион</a>
       <nav class="navigation" aria-label="Разделы">
-        <a href="/" {{if or (eq .Screen "day") (eq .Screen "editor")}}aria-current="page"{{end}}>Рацион</a>
+        <a href="/" {{if or (eq .Screen "day") (eq .Screen "editor")}}aria-current="page"{{end}}>День</a>
         <a href="/plans" {{if eq .Screen "plans"}}aria-current="page"{{end}}>Версии</a>
         <a href="/products" {{if or (eq .Screen "products") (eq .Screen "product")}}aria-current="page"{{end}}>Продукты</a>
       </nav>

@@ -20,11 +20,22 @@ import (
 //go:embed templates/*.html static/*
 var assets embed.FS
 
+// designContract is trusted markup shipped with the application.
+const designContract = template.HTML(`<!--
+THESIS: Day totals, meals and their ingredients share one set of measures.
+OWN-WORLD: Printed training sheets, cobalt navigation, cool paper and ruled columns.
+STORY: Check the version and day total, then open the meal you need.
+FIRST VIEWPORT: Navigation on a full-width strip, edit near the heading, day total above meal subtotals.
+FORM: Training scorecard, direction 6, a0f59b39.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
+-->`)
+
 var templates = template.Must(template.New("app").Funcs(template.FuncMap{
-	"kcal":    calories,
-	"grams":   grams,
-	"id":      func(value int64) string { return strconv.FormatInt(value, 10) },
-	"formNum": formNumber,
+	"kcal":           calories,
+	"grams":          grams,
+	"id":             func(value int64) string { return strconv.FormatInt(value, 10) },
+	"formNum":        formNumber,
+	"designContract": func() template.HTML { return designContract },
 }).ParseFS(assets, "templates/*.html"))
 
 type app struct {

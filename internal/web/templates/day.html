@@ -1,10 +1,10 @@
 {{define "day"}}
 {{if .Plan}}
   {{$plan := .Plan}}
-  <header class="page-heading">
+  <header class="page-heading day-heading">
     <div>
       <h1>Дневной рацион</h1>
-      <p class="subtitle">{{$plan.Name}}{{if $plan.Active}} <span class="active-label">Активный</span>{{end}}</p>
+      <p class="subtitle"><strong>{{$plan.Name}}</strong>{{if $plan.Active}} <span class="active-label">Активный</span>{{end}}</p>
     </div>
     <div class="actions">
       {{if not $plan.Active}}
@@ -16,43 +16,32 @@
       <a class="button" href="/plans/{{$plan.ID}}/edit">Изменить рацион</a>
     </div>
   </header>
-  <div class="day-layout">
-    {{with $plan.Nutrition}}
-    <aside class="day-total" aria-labelledby="total-title">
-      <h2 id="total-title">Итого за день</h2>
-      <p class="energy"><strong>{{kcal .Kcal}}</strong><span>ккал</span></p>
-      <dl class="macro-list">
-        <div><dt>Белки</dt><dd>{{grams .Protein}} <span>г</span></dd></div>
-        <div><dt>Жиры</dt><dd>{{grams .Fat}} <span>г</span></dd></div>
-        <div><dt>Углеводы</dt><dd>{{grams .Carbs}} <span>г</span></dd></div>
-      </dl>
-    </aside>
-    {{end}}
-    <section class="meal-list" aria-labelledby="meals-title">
-      <h2 id="meals-title">Приёмы пищи</h2>
-      {{if $plan.Meals}}
-      <div class="meal-key meal-columns" aria-hidden="true">
-        <span>Приём</span><span>ккал</span><span>Б, г</span><span>Ж, г</span><span>У, г</span><span></span>
+  <section class="sheet" aria-label="Приёмы пищи и КБЖУ">
+      <div class="meal-key sheet-grid" aria-hidden="true">
+        <span>Приёмы пищи</span><span>ккал</span><span>Белки, г</span><span>Жиры, г</span><span>Углеводы, г</span><span></span>
       </div>
+      <div class="day-total sheet-grid">
+        <h2>Итого за день</h2>
+        <span class="measure-note" aria-hidden="true">БЖУ в граммах</span>
+        {{template "stat-cells" $plan.Nutrition}}
+      </div>
+      {{if $plan.Meals}}
       {{range $plan.Meals}}
       <details class="meal">
-        <summary class="meal-columns">
+        <summary class="sheet-grid">
           <span class="meal-name">{{.Name}}</span>
-          {{with .Nutrition}}
-          <span class="meal-energy"><span class="visually-hidden">Калории, </span>{{kcal .Kcal}}<span class="mobile-label" aria-hidden="true"> ккал</span></span>
-          <span class="meal-protein"><span class="visually-hidden">Белки, </span><span class="mobile-label" aria-hidden="true">Б </span>{{grams .Protein}}</span>
-          <span class="meal-fat"><span class="visually-hidden">Жиры, </span><span class="mobile-label" aria-hidden="true">Ж </span>{{grams .Fat}}</span>
-          <span class="meal-carbs"><span class="visually-hidden">Углеводы, </span><span class="mobile-label" aria-hidden="true">У </span>{{grams .Carbs}}</span>
-          {{end}}
-          <span class="chevron" aria-hidden="true"></span>
+          {{template "stat-cells" .Nutrition}}
+          <span class="disclosure" aria-hidden="true"></span>
         </summary>
         {{if .Items}}
         <ul class="ingredients">
           {{range .Items}}
-          <li>
-            <strong>{{.Product.Name}}{{with .Product.State}} <span class="muted">· {{.}}</span>{{end}}</strong>
-            <span class="weight">{{formNum .Grams}} г</span>
-            <span class="portion muted">{{template "compact-nutrition" .Nutrition}}</span>
+          <li class="sheet-grid">
+            <span class="ingredient">
+              <span>{{.Product.Name}}{{with .Product.State}} <small>· {{.}}</small>{{end}}</span>
+              <strong class="weight">{{formNum .Grams}} г</strong>
+            </span>
+            {{template "stat-cells" .Nutrition}}
           </li>
           {{end}}
         </ul>
@@ -60,10 +49,9 @@
       </details>
       {{end}}
       {{else}}
-      <p class="muted">Добавь приёмы пищи и продукты, чтобы увидеть их КБЖУ.</p>
+      <p class="muted empty-meal">Добавь приёмы пищи и продукты, чтобы увидеть их КБЖУ.</p>
       {{end}}
-    </section>
-  </div>
+  </section>
 {{else}}
   <section class="empty-state">
     <h1>Дневной рацион</h1>
@@ -71,6 +59,13 @@
     <a class="button primary" href="/plans/new">Создать рацион</a>
   </section>
 {{end}}
+{{end}}
+
+{{define "stat-cells"}}
+<span class="measure"><span class="measure-label">ккал</span><span class="measure-value">{{kcal .Kcal}}</span></span>
+<span class="measure"><span class="measure-label">Белки<span class="visually-hidden">, г</span></span><span class="measure-value">{{grams .Protein}}</span></span>
+<span class="measure"><span class="measure-label">Жиры<span class="visually-hidden">, г</span></span><span class="measure-value">{{grams .Fat}}</span></span>
+<span class="measure"><span class="measure-label">Углеводы<span class="visually-hidden">, г</span></span><span class="measure-value">{{grams .Carbs}}</span></span>
 {{end}}
 
 {{define "compact-nutrition"}}{{kcal .Kcal}} ккал · Б {{grams .Protein}} · Ж {{grams .Fat}} · У {{grams .Carbs}}{{end}}

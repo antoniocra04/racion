@@ -1,0 +1,639 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-18T14:30:51Z",
+  "title": "Дизайн «Рациона»",
+  "extensions": {
+    "colorMeta": {
+      "page": {
+        "role": "neutral",
+        "displayName": "Фон страницы",
+        "tonalRamp": [
+          "oklch(15% 0.0070 268.5)",
+          "oklch(26% 0.0070 268.5)",
+          "oklch(38% 0.0070 268.5)",
+          "oklch(49% 0.0070 268.5)",
+          "oklch(61% 0.0070 268.5)",
+          "oklch(72% 0.0070 268.5)",
+          "oklch(84% 0.0070 268.5)",
+          "oklch(95% 0.0070 268.5)"
+        ]
+      },
+      "sheet": {
+        "role": "neutral",
+        "displayName": "Поверхность ведомости",
+        "tonalRamp": [
+          "oklch(15% 0.0040 286.3)",
+          "oklch(26% 0.0040 286.3)",
+          "oklch(38% 0.0040 286.3)",
+          "oklch(49% 0.0040 286.3)",
+          "oklch(61% 0.0040 286.3)",
+          "oklch(72% 0.0040 286.3)",
+          "oklch(84% 0.0040 286.3)",
+          "oklch(95% 0.0040 286.3)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Основной текст",
+        "tonalRamp": [
+          "oklch(15% 0.0468 270.4)",
+          "oklch(26% 0.0468 270.4)",
+          "oklch(38% 0.0468 270.4)",
+          "oklch(49% 0.0468 270.4)",
+          "oklch(61% 0.0468 270.4)",
+          "oklch(72% 0.0468 270.4)",
+          "oklch(84% 0.0468 270.4)",
+          "oklch(95% 0.0468 270.4)"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Второстепенный текст",
+        "tonalRamp": [
+          "oklch(15% 0.0376 267.5)",
+          "oklch(26% 0.0376 267.5)",
+          "oklch(38% 0.0376 267.5)",
+          "oklch(49% 0.0376 267.5)",
+          "oklch(61% 0.0376 267.5)",
+          "oklch(72% 0.0376 267.5)",
+          "oklch(84% 0.0376 267.5)",
+          "oklch(95% 0.0376 267.5)"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Разделитель строк",
+        "tonalRamp": [
+          "oklch(15% 0.0230 269.4)",
+          "oklch(26% 0.0230 269.4)",
+          "oklch(38% 0.0230 269.4)",
+          "oklch(49% 0.0230 269.4)",
+          "oklch(61% 0.0230 269.4)",
+          "oklch(72% 0.0230 269.4)",
+          "oklch(84% 0.0230 269.4)",
+          "oklch(95% 0.0230 269.4)"
+        ]
+      },
+      "rule": {
+        "role": "neutral",
+        "displayName": "Граница ведомости",
+        "tonalRamp": [
+          "oklch(15% 0.0556 270.4)",
+          "oklch(26% 0.0556 270.4)",
+          "oklch(38% 0.0556 270.4)",
+          "oklch(49% 0.0556 270.4)",
+          "oklch(61% 0.0556 270.4)",
+          "oklch(72% 0.0556 270.4)",
+          "oklch(84% 0.0556 270.4)",
+          "oklch(95% 0.0556 270.4)"
+        ]
+      },
+      "input-line": {
+        "role": "neutral",
+        "displayName": "Рамка поля",
+        "tonalRamp": [
+          "oklch(15% 0.0471 269.2)",
+          "oklch(26% 0.0471 269.2)",
+          "oklch(38% 0.0471 269.2)",
+          "oklch(49% 0.0471 269.2)",
+          "oklch(61% 0.0471 269.2)",
+          "oklch(72% 0.0471 269.2)",
+          "oklch(84% 0.0471 269.2)",
+          "oklch(95% 0.0471 269.2)"
+        ]
+      },
+      "accent": {
+        "role": "primary",
+        "displayName": "Синий акцент",
+        "tonalRamp": [
+          "oklch(15% 0.1629 269.3)",
+          "oklch(26% 0.1629 269.3)",
+          "oklch(38% 0.1629 269.3)",
+          "oklch(49% 0.1629 269.3)",
+          "oklch(61% 0.1629 269.3)",
+          "oklch(72% 0.1629 269.3)",
+          "oklch(84% 0.1629 269.3)",
+          "oklch(95% 0.1629 269.3)"
+        ]
+      },
+      "header": {
+        "role": "primary",
+        "displayName": "Синяя шапка",
+        "tonalRamp": [
+          "oklch(15% 0.1448 269.8)",
+          "oklch(26% 0.1448 269.8)",
+          "oklch(38% 0.1448 269.8)",
+          "oklch(49% 0.1448 269.8)",
+          "oklch(61% 0.1448 269.8)",
+          "oklch(72% 0.1448 269.8)",
+          "oklch(84% 0.1448 269.8)",
+          "oklch(95% 0.1448 269.8)"
+        ]
+      },
+      "header-ink": {
+        "role": "neutral",
+        "displayName": "Текст шапки",
+        "tonalRamp": [
+          "oklch(15% 0.0080 278.6)",
+          "oklch(26% 0.0080 278.6)",
+          "oklch(38% 0.0080 278.6)",
+          "oklch(49% 0.0080 278.6)",
+          "oklch(61% 0.0080 278.6)",
+          "oklch(72% 0.0080 278.6)",
+          "oklch(84% 0.0080 278.6)",
+          "oklch(95% 0.0080 278.6)"
+        ]
+      },
+      "header-muted": {
+        "role": "neutral",
+        "displayName": "Ссылки шапки",
+        "tonalRamp": [
+          "oklch(15% 0.0343 276.7)",
+          "oklch(26% 0.0343 276.7)",
+          "oklch(38% 0.0343 276.7)",
+          "oklch(49% 0.0343 276.7)",
+          "oklch(61% 0.0343 276.7)",
+          "oklch(72% 0.0343 276.7)",
+          "oklch(84% 0.0343 276.7)",
+          "oklch(95% 0.0343 276.7)"
+        ]
+      },
+      "header-line": {
+        "role": "neutral",
+        "displayName": "Рамка переключателя в шапке",
+        "tonalRamp": [
+          "oklch(15% 0.1059 274.5)",
+          "oklch(26% 0.1059 274.5)",
+          "oklch(38% 0.1059 274.5)",
+          "oklch(49% 0.1059 274.5)",
+          "oklch(61% 0.1059 274.5)",
+          "oklch(72% 0.1059 274.5)",
+          "oklch(84% 0.1059 274.5)",
+          "oklch(95% 0.1059 274.5)"
+        ]
+      },
+      "total": {
+        "role": "neutral",
+        "displayName": "Полоса дневного итога",
+        "tonalRamp": [
+          "oklch(15% 0.0249 273.5)",
+          "oklch(26% 0.0249 273.5)",
+          "oklch(38% 0.0249 273.5)",
+          "oklch(49% 0.0249 273.5)",
+          "oklch(61% 0.0249 273.5)",
+          "oklch(72% 0.0249 273.5)",
+          "oklch(84% 0.0249 273.5)",
+          "oklch(95% 0.0249 273.5)"
+        ]
+      },
+      "secondary": {
+        "role": "neutral",
+        "displayName": "Фон вложенной позиции",
+        "tonalRamp": [
+          "oklch(15% 0.0109 274.9)",
+          "oklch(26% 0.0109 274.9)",
+          "oklch(38% 0.0109 274.9)",
+          "oklch(49% 0.0109 274.9)",
+          "oklch(61% 0.0109 274.9)",
+          "oklch(72% 0.0109 274.9)",
+          "oklch(84% 0.0109 274.9)",
+          "oklch(95% 0.0109 274.9)"
+        ]
+      },
+      "hover": {
+        "role": "neutral",
+        "displayName": "Фон при наведении",
+        "tonalRamp": [
+          "oklch(15% 0.0164 274.8)",
+          "oklch(26% 0.0164 274.8)",
+          "oklch(38% 0.0164 274.8)",
+          "oklch(49% 0.0164 274.8)",
+          "oklch(61% 0.0164 274.8)",
+          "oklch(72% 0.0164 274.8)",
+          "oklch(84% 0.0164 274.8)",
+          "oklch(95% 0.0164 274.8)"
+        ]
+      },
+      "action-ink": {
+        "role": "neutral",
+        "displayName": "Текст основной кнопки",
+        "tonalRamp": [
+          "oklch(15% 0.0000 0.0)",
+          "oklch(26% 0.0000 0.0)",
+          "oklch(38% 0.0000 0.0)",
+          "oklch(49% 0.0000 0.0)",
+          "oklch(61% 0.0000 0.0)",
+          "oklch(72% 0.0000 0.0)",
+          "oklch(84% 0.0000 0.0)",
+          "oklch(95% 0.0000 0.0)"
+        ]
+      },
+      "focus": {
+        "role": "neutral",
+        "displayName": "Контур фокуса",
+        "tonalRamp": [
+          "oklch(15% 0.1896 269.2)",
+          "oklch(26% 0.1896 269.2)",
+          "oklch(38% 0.1896 269.2)",
+          "oklch(49% 0.1896 269.2)",
+          "oklch(61% 0.1896 269.2)",
+          "oklch(72% 0.1896 269.2)",
+          "oklch(84% 0.1896 269.2)",
+          "oklch(95% 0.1896 269.2)"
+        ]
+      },
+      "error": {
+        "role": "neutral",
+        "displayName": "Текст и рамка ошибки",
+        "tonalRamp": [
+          "oklch(15% 0.1493 20.6)",
+          "oklch(26% 0.1493 20.6)",
+          "oklch(38% 0.1493 20.6)",
+          "oklch(49% 0.1493 20.6)",
+          "oklch(61% 0.1493 20.6)",
+          "oklch(72% 0.1493 20.6)",
+          "oklch(84% 0.1493 20.6)",
+          "oklch(95% 0.1493 20.6)"
+        ]
+      },
+      "error-bg": {
+        "role": "neutral",
+        "displayName": "Фон сообщения об ошибке",
+        "tonalRamp": [
+          "oklch(15% 0.0196 357.6)",
+          "oklch(26% 0.0196 357.6)",
+          "oklch(38% 0.0196 357.6)",
+          "oklch(49% 0.0196 357.6)",
+          "oklch(61% 0.0196 357.6)",
+          "oklch(72% 0.0196 357.6)",
+          "oklch(84% 0.0196 357.6)",
+          "oklch(95% 0.0196 357.6)"
+        ]
+      },
+      "page-dark": {
+        "role": "neutral",
+        "displayName": "Фон страницы · тёмная тема",
+        "tonalRamp": [
+          "oklch(15% 0.0280 271.7)",
+          "oklch(26% 0.0280 271.7)",
+          "oklch(38% 0.0280 271.7)",
+          "oklch(49% 0.0280 271.7)",
+          "oklch(61% 0.0280 271.7)",
+          "oklch(72% 0.0280 271.7)",
+          "oklch(84% 0.0280 271.7)",
+          "oklch(95% 0.0280 271.7)"
+        ]
+      },
+      "sheet-dark": {
+        "role": "neutral",
+        "displayName": "Поверхность ведомости · тёмная тема",
+        "tonalRamp": [
+          "oklch(15% 0.0383 270.9)",
+          "oklch(26% 0.0383 270.9)",
+          "oklch(38% 0.0383 270.9)",
+          "oklch(49% 0.0383 270.9)",
+          "oklch(61% 0.0383 270.9)",
+          "oklch(72% 0.0383 270.9)",
+          "oklch(84% 0.0383 270.9)",
+          "oklch(95% 0.0383 270.9)"
+        ]
+      },
+      "ink-dark": {
+        "role": "neutral",
+        "displayName": "Основной текст · тёмная тема",
+        "tonalRamp": [
+          "oklch(15% 0.0147 282.0)",
+          "oklch(26% 0.0147 282.0)",
+          "oklch(38% 0.0147 282.0)",
+          "oklch(49% 0.0147 282.0)",
+          "oklch(61% 0.0147 282.0)",
+          "oklch(72% 0.0147 282.0)",
+          "oklch(84% 0.0147 282.0)",
+          "oklch(95% 0.0147 282.0)"
+        ]
+      },
+      "muted-dark": {
+        "role": "neutral",
+        "displayName": "Второстепенный текст · тёмная тема",
+        "tonalRamp": [
+          "oklch(15% 0.0374 272.0)",
+          "oklch(26% 0.0374 272.0)",
+          "oklch(38% 0.0374 272.0)",
+          "oklch(49% 0.0374 272.0)",
+          "oklch(61% 0.0374 272.0)",
+          "oklch(72% 0.0374 272.0)",
+          "oklch(84% 0.0374 272.0)",
+          "oklch(95% 0.0374 272.0)"
+        ]
+      },
+      "line-dark": {
+        "role": "neutral",
+        "displayName": "Разделитель строк · тёмная тема",
+        "tonalRamp": [
+          "oklch(15% 0.0504 269.5)",
+          "oklch(26% 0.0504 269.5)",
+          "oklch(38% 0.0504 269.5)",
+          "oklch(49% 0.0504 269.5)",
+          "oklch(61% 0.0504 269.5)",
+          "oklch(72% 0.0504 269.5)",
+          "oklch(84% 0.0504 269.5)",
+          "oklch(95% 0.0504 269.5)"
+        ]
+      },
+      "rule-dark": {
+        "role": "neutral",
+        "displayName": "Граница ведомости · тёмная тема",
+        "tonalRamp": [
+          "oklch(15% 0.0684 269.4)",
+          "oklch(26% 0.0684 269.4)",
+          "oklch(38% 0.0684 269.4)",
+          "oklch(49% 0.0684 269.4)",
+          "oklch(61% 0.0684 269.4)",
+          "oklch(72% 0.0684 269.4)",
+          "oklch(84% 0.0684 269.4)",
+          "oklch(95% 0.0684 269.4)"
+        ]
+      },
+      "input-line-dark": {
+        "role": "neutral",
+        "displayName": "Рамка поля · тёмная тема",
+        "tonalRamp": [
+          "oklch(15% 0.0598 268.9)",
+          "oklch(26% 0.0598 268.9)",
+          "oklch(38% 0.0598 268.9)",
+          "oklch(49% 0.0598 268.9)",
+          "oklch(61% 0.0598 268.9)",
+          "oklch(72% 0.0598 268.9)",
+          "oklch(84% 0.0598 268.9)",
+          "oklch(95% 0.0598 268.9)"
+        ]
+      },
+      "accent-dark": {
+        "role": "primary",
+        "displayName": "Синий акцент · тёмная тема",
+        "tonalRamp": [
+          "oklch(15% 0.1070 274.3)",
+          "oklch(26% 0.1070 274.3)",
+          "oklch(38% 0.1070 274.3)",
+          "oklch(49% 0.1070 274.3)",
+          "oklch(61% 0.1070 274.3)",
+          "oklch(72% 0.1070 274.3)",
+          "oklch(84% 0.1070 274.3)",
+          "oklch(95% 0.1070 274.3)"
+        ]
+      },
+      "header-dark": {
+        "role": "primary",
+        "displayName": "Синяя шапка · тёмная тема",
+        "tonalRamp": [
+          "oklch(15% 0.1092 270.1)",
+          "oklch(26% 0.1092 270.1)",
+          "oklch(38% 0.1092 270.1)",
+          "oklch(49% 0.1092 270.1)",
+          "oklch(61% 0.1092 270.1)",
+          "oklch(72% 0.1092 270.1)",
+          "oklch(84% 0.1092 270.1)",
+          "oklch(95% 0.1092 270.1)"
+        ]
+      },
+      "header-line-dark": {
+        "role": "neutral",
+        "displayName": "Рамка переключателя в шапке · тёмная тема",
+        "tonalRamp": [
+          "oklch(15% 0.0872 273.1)",
+          "oklch(26% 0.0872 273.1)",
+          "oklch(38% 0.0872 273.1)",
+          "oklch(49% 0.0872 273.1)",
+          "oklch(61% 0.0872 273.1)",
+          "oklch(72% 0.0872 273.1)",
+          "oklch(84% 0.0872 273.1)",
+          "oklch(95% 0.0872 273.1)"
+        ]
+      },
+      "total-dark": {
+        "role": "neutral",
+        "displayName": "Полоса дневного итога · тёмная тема",
+        "tonalRamp": [
+          "oklch(15% 0.0703 267.8)",
+          "oklch(26% 0.0703 267.8)",
+          "oklch(38% 0.0703 267.8)",
+          "oklch(49% 0.0703 267.8)",
+          "oklch(61% 0.0703 267.8)",
+          "oklch(72% 0.0703 267.8)",
+          "oklch(84% 0.0703 267.8)",
+          "oklch(95% 0.0703 267.8)"
+        ]
+      },
+      "secondary-dark": {
+        "role": "neutral",
+        "displayName": "Фон вложенной позиции · тёмная тема",
+        "tonalRamp": [
+          "oklch(15% 0.0439 267.4)",
+          "oklch(26% 0.0439 267.4)",
+          "oklch(38% 0.0439 267.4)",
+          "oklch(49% 0.0439 267.4)",
+          "oklch(61% 0.0439 267.4)",
+          "oklch(72% 0.0439 267.4)",
+          "oklch(84% 0.0439 267.4)",
+          "oklch(95% 0.0439 267.4)"
+        ]
+      },
+      "hover-dark": {
+        "role": "neutral",
+        "displayName": "Фон при наведении · тёмная тема",
+        "tonalRamp": [
+          "oklch(15% 0.0513 269.8)",
+          "oklch(26% 0.0513 269.8)",
+          "oklch(38% 0.0513 269.8)",
+          "oklch(49% 0.0513 269.8)",
+          "oklch(61% 0.0513 269.8)",
+          "oklch(72% 0.0513 269.8)",
+          "oklch(84% 0.0513 269.8)",
+          "oklch(95% 0.0513 269.8)"
+        ]
+      },
+      "action-ink-dark": {
+        "role": "neutral",
+        "displayName": "Текст основной кнопки · тёмная тема",
+        "tonalRamp": [
+          "oklch(15% 0.0778 270.4)",
+          "oklch(26% 0.0778 270.4)",
+          "oklch(38% 0.0778 270.4)",
+          "oklch(49% 0.0778 270.4)",
+          "oklch(61% 0.0778 270.4)",
+          "oklch(72% 0.0778 270.4)",
+          "oklch(84% 0.0778 270.4)",
+          "oklch(95% 0.0778 270.4)"
+        ]
+      },
+      "focus-dark": {
+        "role": "neutral",
+        "displayName": "Контур фокуса · тёмная тема",
+        "tonalRamp": [
+          "oklch(15% 0.0888 274.4)",
+          "oklch(26% 0.0888 274.4)",
+          "oklch(38% 0.0888 274.4)",
+          "oklch(49% 0.0888 274.4)",
+          "oklch(61% 0.0888 274.4)",
+          "oklch(72% 0.0888 274.4)",
+          "oklch(84% 0.0888 274.4)",
+          "oklch(95% 0.0888 274.4)"
+        ]
+      },
+      "error-dark": {
+        "role": "neutral",
+        "displayName": "Текст и рамка ошибки · тёмная тема",
+        "tonalRamp": [
+          "oklch(15% 0.0909 8.9)",
+          "oklch(26% 0.0909 8.9)",
+          "oklch(38% 0.0909 8.9)",
+          "oklch(49% 0.0909 8.9)",
+          "oklch(61% 0.0909 8.9)",
+          "oklch(72% 0.0909 8.9)",
+          "oklch(84% 0.0909 8.9)",
+          "oklch(95% 0.0909 8.9)"
+        ]
+      },
+      "error-bg-dark": {
+        "role": "neutral",
+        "displayName": "Фон сообщения об ошибке · тёмная тема",
+        "tonalRamp": [
+          "oklch(15% 0.0576 352.4)",
+          "oklch(26% 0.0576 352.4)",
+          "oklch(38% 0.0576 352.4)",
+          "oklch(49% 0.0576 352.4)",
+          "oklch(61% 0.0576 352.4)",
+          "oklch(72% 0.0576 352.4)",
+          "oklch(84% 0.0576 352.4)",
+          "oklch(95% 0.0576 352.4)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "headline": {
+        "displayName": "Заголовок страницы",
+        "purpose": "Название экрана."
+      },
+      "total": {
+        "displayName": "Дневной итог",
+        "purpose": "Четыре значения КБЖУ за день."
+      },
+      "title": {
+        "displayName": "Заголовок секции",
+        "purpose": "Второй уровень заголовков."
+      },
+      "body": {
+        "displayName": "Основной текст",
+        "purpose": "Текст и поля."
+      },
+      "action": {
+        "displayName": "Действие",
+        "purpose": "Надписи кнопок."
+      },
+      "field-label": {
+        "displayName": "Подпись поля",
+        "purpose": "Название поля или группы полей."
+      }
+    },
+    "motion": [
+      {
+        "name": "disclosure",
+        "value": "transform 130ms ease-out",
+        "purpose": "Поворот штриха знака раскрытия. При уменьшенном движении переход отключён."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "compact-sheet",
+        "value": "46rem"
+      },
+      {
+        "name": "two-column-fields",
+        "value": "33rem"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Основная кнопка",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Акцентная заливка для сохранения, создания и активации.",
+      "html": "<div class=\"ds-preview\"><button type=\"button\" class=\"ds-button ds-primary\">Сохранить рацион</button></div>",
+      "css": ".ds-preview { --input-line: #7d88a6; --sheet: #fcfcff; --ink: #192038; --hover: #edf0fc; --focus: #354dc6; --accent: #283b9f; --action-ink: #fff; color: var(--ink, inherit); font: 400 1rem/1.45 'Golos Text', system-ui, sans-serif; font-variant-numeric: tabular-nums lining-nums; } @media (prefers-color-scheme: dark) { .ds-preview { --input-line: #7987ad; --sheet: #20263a; --ink: #f3f4ff; --hover: #2b3450; --focus: #b3c1ff; --accent: #a5b5ff; --action-ink: #131c45; } } .ds-button { display: inline-flex; min-height: 2.75rem; align-items: center; justify-content: center; padding: .45rem .85rem; border: 1px solid var(--input-line); border-radius: .2rem; background: var(--sheet); color: var(--ink); font: 650 .875rem/1.25 'Golos Text', system-ui, sans-serif; cursor: pointer; text-decoration: none; box-sizing: border-box; } .ds-button:hover { background: var(--hover); } .ds-button:disabled { opacity: .55; cursor: default; } .ds-primary, .ds-primary:hover { border-color: var(--accent); background: var(--accent); color: var(--action-ink); } .ds-primary:hover { filter: brightness(1.12); } .ds-preview :focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }"
+    },
+    {
+      "name": "Кнопка с рамкой",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Поверхность ведомости и рамка для обычного действия.",
+      "html": "<div class=\"ds-preview\"><button type=\"button\" class=\"ds-button ds-secondary\">Изменить рацион</button></div>",
+      "css": ".ds-preview { --input-line: #7d88a6; --sheet: #fcfcff; --ink: #192038; --hover: #edf0fc; --focus: #354dc6; color: var(--ink, inherit); font: 400 1rem/1.45 'Golos Text', system-ui, sans-serif; font-variant-numeric: tabular-nums lining-nums; } @media (prefers-color-scheme: dark) { .ds-preview { --input-line: #7987ad; --sheet: #20263a; --ink: #f3f4ff; --hover: #2b3450; --focus: #b3c1ff; } } .ds-button { display: inline-flex; min-height: 2.75rem; align-items: center; justify-content: center; padding: .45rem .85rem; border: 1px solid var(--input-line); border-radius: .2rem; background: var(--sheet); color: var(--ink); font: 650 .875rem/1.25 'Golos Text', system-ui, sans-serif; cursor: pointer; text-decoration: none; box-sizing: border-box; } .ds-button:hover { background: var(--hover); } .ds-button:disabled { opacity: .55; cursor: default; }  .ds-preview :focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }"
+    },
+    {
+      "name": "Тихое действие",
+      "kind": "button",
+      "refersTo": "button-quiet",
+      "description": "Подчёркнутое второстепенное действие.",
+      "html": "<div class=\"ds-preview\"><button type=\"button\" class=\"ds-button ds-quiet\">Скопировать</button></div>",
+      "css": ".ds-preview { --input-line: #7d88a6; --sheet: #fcfcff; --ink: #192038; --hover: #edf0fc; --focus: #354dc6; --accent: #283b9f; color: var(--ink, inherit); font: 400 1rem/1.45 'Golos Text', system-ui, sans-serif; font-variant-numeric: tabular-nums lining-nums; } @media (prefers-color-scheme: dark) { .ds-preview { --input-line: #7987ad; --sheet: #20263a; --ink: #f3f4ff; --hover: #2b3450; --focus: #b3c1ff; --accent: #a5b5ff; } } .ds-button { display: inline-flex; min-height: 2.75rem; align-items: center; justify-content: center; padding: .45rem .85rem; border: 1px solid var(--input-line); border-radius: .2rem; background: var(--sheet); color: var(--ink); font: 650 .875rem/1.25 'Golos Text', system-ui, sans-serif; cursor: pointer; text-decoration: none; box-sizing: border-box; } .ds-button:hover { background: var(--hover); } .ds-button:disabled { opacity: .55; cursor: default; } .ds-quiet { border-color: transparent; background: transparent; color: var(--accent); text-decoration: underline; text-underline-offset: .25em; } .ds-preview :focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }"
+    },
+    {
+      "name": "Подтверждение удаления",
+      "kind": "button",
+      "refersTo": "button-danger",
+      "description": "Отдельное подтверждение внутри раскрытого блока удаления.",
+      "html": "<div class=\"ds-preview\"><button type=\"button\" class=\"ds-button ds-danger\">Подтвердить удаление</button></div>",
+      "css": ".ds-preview { --input-line: #7d88a6; --sheet: #fcfcff; --ink: #192038; --hover: #edf0fc; --focus: #354dc6; --error: #a02e37; color: var(--ink, inherit); font: 400 1rem/1.45 'Golos Text', system-ui, sans-serif; font-variant-numeric: tabular-nums lining-nums; } @media (prefers-color-scheme: dark) { .ds-preview { --input-line: #7987ad; --sheet: #20263a; --ink: #f3f4ff; --hover: #2b3450; --focus: #b3c1ff; --error: #ffb2be; } } .ds-button { display: inline-flex; min-height: 2.75rem; align-items: center; justify-content: center; padding: .45rem .85rem; border: 1px solid var(--input-line); border-radius: .2rem; background: var(--sheet); color: var(--ink); font: 650 .875rem/1.25 'Golos Text', system-ui, sans-serif; cursor: pointer; text-decoration: none; box-sizing: border-box; } .ds-button:hover { background: var(--hover); } .ds-button:disabled { opacity: .55; cursor: default; } .ds-danger { border-color: currentColor; color: var(--error); } .ds-preview :focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }"
+    },
+    {
+      "name": "Поле ввода",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Видимая подпись и поле с рамкой.",
+      "html": "<div class=\"ds-preview\"><label class=\"ds-field\">Название продукта<input class=\"ds-input\" placeholder=\"Например, рис\"></label></div>",
+      "css": ".ds-preview { --input-line: #7d88a6; --sheet: #fcfcff; --ink: #192038; --muted: #50596f; --focus: #354dc6; --error: #a02e37; color: var(--ink, inherit); font: 400 1rem/1.45 'Golos Text', system-ui, sans-serif; font-variant-numeric: tabular-nums lining-nums; } @media (prefers-color-scheme: dark) { .ds-preview { --input-line: #7987ad; --sheet: #20263a; --ink: #f3f4ff; --muted: #c0c8e2; --focus: #b3c1ff; --error: #ffb2be; } } .ds-field { display: grid; gap: .3rem; font-size: .875rem; font-weight: 640; } .ds-input { width: 100%; min-height: 2.75rem; box-sizing: border-box; padding: .45rem .65rem; border: 1px solid var(--input-line); border-radius: .2rem; background: var(--sheet); color: var(--ink); font: 400 1rem/1.45 'Golos Text', system-ui, sans-serif; } .ds-input::placeholder { color: var(--muted); } .ds-input[aria-invalid] { border-color: var(--error); } .ds-preview :focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }"
+    },
+    {
+      "name": "Навигация",
+      "kind": "nav",
+      "refersTo": "navigation",
+      "description": "Активная вкладка выделена нижней линией.",
+      "html": "<div class=\"ds-preview\"><nav class=\"ds-nav\" aria-label=\"Разделы\"><a href=\"/\" aria-current=\"page\">День</a><a href=\"/plans\">Версии</a><a href=\"/products\">Продукты</a></nav></div>",
+      "css": ".ds-preview { --header: #27388f; --header-ink: #f8f9ff; --header-muted: #e1e6ff; color: var(--ink, inherit); font: 400 1rem/1.45 'Golos Text', system-ui, sans-serif; font-variant-numeric: tabular-nums lining-nums; } @media (prefers-color-scheme: dark) { .ds-preview { --header: #283776; } } .ds-nav { display: flex; align-items: stretch; column-gap: clamp(.75rem, 2vw, 1.75rem); padding-inline: 1rem; background: var(--header); } .ds-nav a { display: grid; align-items: center; min-height: 2.75rem; text-decoration: none; font-size: .875rem; font-weight: 560; color: var(--header-muted); } .ds-nav a:hover { color: var(--header-ink); text-decoration: underline; text-underline-offset: .25rem; } .ds-nav a[aria-current] { color: var(--header-ink); box-shadow: inset 0 -.2rem currentColor; font-weight: 700; } .ds-nav a:focus-visible { outline: 2px solid var(--header-ink); outline-offset: 3px; }"
+    },
+    {
+      "name": "Переключатель версии",
+      "kind": "input",
+      "refersTo": "plan-switcher",
+      "description": "Нативный список активного рациона в шапке.",
+      "html": "<div class=\"ds-preview\"><label class=\"ds-switcher\">Активный рацион<select class=\"ds-select\"><option>Тренировочный</option></select></label></div>",
+      "css": ".ds-preview { --header: #27388f; --header-ink: #f8f9ff; --header-muted: #e1e6ff; --header-line: #95a4ec; color: var(--ink, inherit); font: 400 1rem/1.45 'Golos Text', system-ui, sans-serif; font-variant-numeric: tabular-nums lining-nums; } @media (prefers-color-scheme: dark) { .ds-preview { --header: #283776; --header-line: #99a8e3; } } .ds-switcher { display: flex; align-items: center; gap: .55rem; padding: .45rem 1rem; background: var(--header); color: var(--header-muted); font-size: .75rem; } .ds-select { color-scheme: dark; color: var(--header-ink); background: var(--header); border: 1px solid var(--header-line); border-radius: .2rem; box-sizing: border-box; min-height: 2.75rem; padding: .45rem .65rem; font: 620 .875rem/1.45 'Golos Text', system-ui, sans-serif; cursor: pointer; } .ds-select:focus-visible { outline: 2px solid var(--header-ink); outline-offset: 3px; }"
+    },
+    {
+      "name": "Строка справочника",
+      "kind": "card",
+      "refersTo": "records",
+      "description": "Название и КБЖУ в строке с горизонтальными границами.",
+      "html": "<div class=\"ds-preview\"><div class=\"ds-record\"><div><a href=\"/products/1/edit\" class=\"ds-title\">Рис басмати</a> <span class=\"ds-muted\">· сухой</span><p class=\"ds-meta\">350 ккал · Б 7 · Ж 0,8 · У 78</p></div><a href=\"/products/1/edit\" class=\"ds-button ds-quiet\">Изменить</a></div></div>",
+      "css": ".ds-preview { --sheet: #fcfcff; --ink: #192038; --rule: #8490b4; --accent: #283b9f; --muted: #50596f; --input-line: #7d88a6; --hover: #edf0fc; --focus: #354dc6; color: var(--ink, inherit); font: 400 1rem/1.45 'Golos Text', system-ui, sans-serif; font-variant-numeric: tabular-nums lining-nums; } @media (prefers-color-scheme: dark) { .ds-preview { --sheet: #20263a; --ink: #f3f4ff; --rule: #6e7da8; --accent: #a5b5ff; --muted: #c0c8e2; --input-line: #7987ad; --hover: #2b3450; --focus: #b3c1ff; } } .ds-record { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: .35rem 1rem; padding: .55rem clamp(.85rem, 2.4vw, 1.75rem); background: var(--sheet); color: var(--ink); border-block: .125rem solid var(--rule); } .ds-title { color: inherit; font-weight: 680; overflow-wrap: anywhere; text-underline-offset: .22em; } .ds-title:hover { color: var(--accent); } .ds-meta { margin: .25rem 0 0; font-size: .875rem; } .ds-muted, .ds-meta { color: var(--muted); } .ds-button { display: inline-flex; min-height: 2.75rem; align-items: center; justify-content: center; padding: .45rem .85rem; border: 1px solid var(--input-line); border-radius: .2rem; background: var(--sheet); color: var(--ink); font: 650 .875rem/1.25 'Golos Text', system-ui, sans-serif; cursor: pointer; text-decoration: none; box-sizing: border-box; } .ds-button:hover { background: var(--hover); } .ds-button:disabled { opacity: .55; cursor: default; } .ds-quiet { border-color: transparent; background: transparent; color: var(--accent); text-decoration: underline; text-underline-offset: .25em; } .ds-preview :focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }"
+    },
+    {
+      "name": "Дневной итог и приём",
+      "kind": "custom",
+      "refersTo": "day-total",
+      "description": "Дневной итог, подытог приёма и состав в общей ведомости.",
+      "html": "<div class=\"ds-preview\"><div class=\"ds-sheet\"><div class=\"ds-grid ds-key\" aria-hidden=\"true\"><span>Приёмы пищи</span><span>ккал</span><span>Белки, г</span><span>Жиры, г</span><span>Углеводы, г</span></div><div class=\"ds-grid ds-total\"><strong class=\"ds-name\">Итого за день</strong><span class=\"ds-note\" aria-hidden=\"true\">БЖУ в граммах</span><span class=\"ds-measure\"><span class=\"ds-unit\">ккал</span><span>2 543</span></span><span class=\"ds-measure\"><span class=\"ds-unit\">Белки</span><span>200,7</span></span><span class=\"ds-measure\"><span class=\"ds-unit\">Жиры</span><span>80,7</span></span><span class=\"ds-measure\"><span class=\"ds-unit\">Углеводы</span><span>251,4</span></span></div><details><summary class=\"ds-grid ds-meal\"><strong class=\"ds-name\">Обед</strong><span class=\"ds-measure\"><span class=\"ds-unit\">ккал</span><span>875</span></span><span class=\"ds-measure\"><span class=\"ds-unit\">Белки</span><span>74,4</span></span><span class=\"ds-measure\"><span class=\"ds-unit\">Жиры</span><span>23,6</span></span><span class=\"ds-measure\"><span class=\"ds-unit\">Углеводы</span><span>85,8</span></span><span class=\"ds-disclosure\" aria-hidden=\"true\"></span></summary><div class=\"ds-grid ds-item\"><span class=\"ds-ingredient\">Куриная грудка <b class=\"ds-weight\">215 г</b></span><span class=\"ds-measure\"><span class=\"ds-unit\">ккал</span><span>355</span></span><span class=\"ds-measure\"><span class=\"ds-unit\">Белки</span><span>66,6</span></span><span class=\"ds-measure\"><span class=\"ds-unit\">Жиры</span><span>7,7</span></span><span class=\"ds-measure\"><span class=\"ds-unit\">Углеводы</span><span>0</span></span></div></details></div></div>",
+      "css": ".ds-preview { --ink: #192038; --sheet: #fcfcff; --rule: #8490b4; --muted: #50596f; --total: #e6ebfd; --line: #cdd3e3; --accent: #283b9f; --hover: #edf0fc; --focus: #354dc6; --secondary: #f1f3fb; color: var(--ink, inherit); font: 400 1rem/1.45 'Golos Text', system-ui, sans-serif; font-variant-numeric: tabular-nums lining-nums; } @media (prefers-color-scheme: dark) { .ds-preview { --ink: #f3f4ff; --sheet: #20263a; --rule: #6e7da8; --muted: #c0c8e2; --total: #2d3b62; --line: #414b68; --accent: #a5b5ff; --hover: #2b3450; --focus: #b3c1ff; --secondary: #232c43; } } .ds-sheet { background: var(--sheet); border-block: .125rem solid var(--rule); } .ds-grid { display: grid; grid-template-columns: minmax(0, 2.1fr) repeat(4, minmax(5.15rem, 1fr)) 1.3rem; align-items: center; gap: .3rem clamp(.5rem, 1.7vw, 1.1rem); padding-inline: clamp(.85rem, 2.4vw, 1.75rem); } .ds-key { min-height: 2.7rem; color: var(--muted); font-size: .78rem; font-weight: 600; } .ds-key > :not(:first-child), .ds-measure { text-align: right; } .ds-measure { min-width: 0; font-weight: 600; overflow-wrap: anywhere; } .ds-unit { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; } .ds-note { display: none; } .ds-total { padding-block: 1.12rem; background: var(--total); border-block: 1px solid var(--line); } .ds-total .ds-name { font-size: clamp(1rem, 2vw, 1.375rem); font-weight: 680; } .ds-total .ds-measure { color: var(--accent); font-size: clamp(1.55rem, 3.05vw, 2.5rem); line-height: 1.15; font-weight: 690; letter-spacing: -.03em; } .ds-meal { position: relative; min-height: 3.9rem; padding-block: .65rem; box-sizing: border-box; list-style: none; cursor: pointer; } .ds-meal::-webkit-details-marker { display: none; } .ds-meal:hover, details[open] .ds-meal { background: var(--hover); } .ds-meal .ds-name { font-weight: 680; overflow-wrap: anywhere; } .ds-meal:focus-visible { outline: 2px solid var(--focus); outline-offset: -3px; } .ds-disclosure { display: grid; justify-self: end; place-items: center; width: 1.25rem; height: 1.25rem; color: var(--accent); } .ds-disclosure::before, .ds-disclosure::after { content: \"\"; grid-area: 1 / 1; width: .7rem; height: 1px; background: currentColor; } .ds-disclosure::after { transform: rotate(90deg); transition: transform 130ms ease-out; } details[open] .ds-disclosure::after { transform: rotate(0); } .ds-item { background: var(--secondary); border-top: 1px solid var(--line); padding-block: .8rem; } .ds-item .ds-measure { color: var(--muted); font-size: .875rem; font-weight: 500; } .ds-ingredient { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .6rem; align-items: baseline; padding-inline-start: .85rem; overflow-wrap: anywhere; font-size: .875rem; } .ds-weight { white-space: nowrap; font-size: .81rem; font-weight: 640; } @media (max-width: 46rem) { .ds-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .45rem .5rem; } .ds-key { display: none; } .ds-total { border-block-start: 0; padding-block: .85rem; } .ds-total .ds-name { grid-column: 1 / 3; } .ds-meal .ds-name, .ds-ingredient { grid-column: 1 / -1; } .ds-note { display: block; grid-column: 3 / -1; color: var(--muted); font-size: .7rem; text-align: right; } .ds-measure { text-align: left; } .ds-unit { display: block; position: static; width: auto; height: auto; clip-path: none; color: var(--muted); font-size: .69rem; font-weight: 520; } .ds-meal { padding-block: .7rem; } .ds-meal .ds-name { padding-inline-end: 2rem; } .ds-disclosure { position: absolute; inset-block-start: .62rem; inset-inline-end: .82rem; } .ds-item { padding-block: .65rem; } .ds-item .ds-measure { font-size: .82rem; } .ds-ingredient { padding-inline-start: 0; } } @media (prefers-reduced-motion: reduce) { .ds-disclosure::after { transition: none; } }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Печатная тренировочная ведомость",
+    "overview": "**Визуальный ориентир — печатная тренировочная ведомость.** Синяя шапка, холодный фон и горизонтальные линии объединяют экраны. На главном экране дневной итог, приёмы пищи и продукты используют один порядок КБЖУ. Пользователь сверяет название рациона и итог за день, затем раскрывает нужный приём.",
+    "dos": [
+      "Сохранять порядок показателей «ккал, белки, жиры, углеводы» на уровнях дня, приёма и порции. В ведомости использовать полные подписи, в строках справочников — «Б, Ж, У».",
+      "Показывать подытог приёма в свёрнутом состоянии и оставлять состав свёрнутым при открытии дня.",
+      "Сохранять текстовую отметку активной версии и видимый фокус при работе с клавиатуры. Шрифты и стили обслуживать вместе с приложением, чтобы интерфейс был доступен в домашней сети."
+    ]
+  }
+}
