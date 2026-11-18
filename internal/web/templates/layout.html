@@ -4,13 +4,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#27388f" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#283776" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#fcfcfa" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#171b29" media="(prefers-color-scheme: dark)">
   <title>{{.Title}} · Рацион</title>
   <link rel="stylesheet" href="/static/app.css">
   <script defer src="/static/app.js"></script>
 </head>
-<body>
+<body class="screen-{{.Screen}}">
   {{designContract}}
   <a class="skip" href="#main">К содержимому</a>
   <header class="topbar">
@@ -21,14 +21,11 @@
         <a href="/plans" {{if eq .Screen "plans"}}aria-current="page"{{end}}>Версии</a>
         <a href="/products" {{if or (eq .Screen "products") (eq .Screen "product")}}aria-current="page"{{end}}>Продукты</a>
       </nav>
-      {{if .Plans}}
-      <form class="switcher" action="/plans/activate" method="post" data-switcher>
-        <label class="switcher-label" for="active-plan">Активный рацион</label>
-        <select name="id" id="active-plan">
-          {{range .Plans}}<option value="{{.ID}}"{{if .Active}} selected{{end}}>{{.Name}}</option>{{end}}
-        </select>
-        <button class="button quiet switch-submit" type="submit">Активировать</button>
-      </form>
+      {{if and .Plans (ne .Screen "day")}}
+        {{template "plan-switcher" .Plans}}
+      {{end}}
+      {{if and (eq .Screen "day") .Plan}}
+        <a class="button day-edit-mobile" href="/plans/{{.Plan.ID}}/edit">Изменить</a>
       {{end}}
     </div>
   </header>
@@ -46,4 +43,16 @@
   </main>
 </body>
 </html>
+{{end}}
+
+{{define "plan-switcher"}}
+<form class="switcher" action="/plans/activate" method="post" data-switcher>
+  <label class="visually-hidden" for="active-plan">Активный рацион</label>
+  <div class="switcher-control">
+    <select name="id" id="active-plan">
+      {{range .}}<option value="{{.ID}}"{{if .Active}} selected{{end}}>{{.Name}}</option>{{end}}
+    </select>
+  </div>
+  <button class="button quiet switch-submit" type="submit">Активировать</button>
+</form>
 {{end}}

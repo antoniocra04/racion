@@ -22,11 +22,11 @@ var assets embed.FS
 
 // designContract is trusted markup shipped with the application.
 const designContract = template.HTML(`<!--
-THESIS: Day totals, meals and their ingredients share one set of measures.
-OWN-WORLD: Printed training sheets, cobalt navigation, cool paper and ruled columns.
-STORY: Check the version and day total, then open the meal you need.
-FIRST VIEWPORT: Navigation on a full-width strip, edit near the heading, day total above meal subtotals.
-FORM: Training scorecard, direction 6, a0f59b39.
+THESIS: Read the day's calories and macros at a glance.
+OWN-WORLD: Off-white canvas, cobalt figures, one tinted summary and a plain list.
+STORY: Check the active version, scan the day totals, then open the meal you need.
+FIRST VIEWPORT: The selected plan is above a summary beside the list on desktop, above it on mobile.
+FORM: Approved option 1, summary and list.
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
 -->`)
 

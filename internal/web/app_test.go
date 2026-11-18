@@ -36,7 +36,17 @@ func TestRationWorkflow(t *testing.T) {
 		"product_0": {"1"}, "grams_0": {"150"},
 	}
 	check(t, request(handler, "POST", "/plans/editor", draft), 303, "")
-	check(t, request(handler, "GET", "/", nil), 200, "180", "16,5", "Основной")
+	daily := request(handler, "GET", "/", nil)
+	check(t, daily, 200, "180", "16,5", "Основной", "150 г")
+	_, meal, found := strings.Cut(daily.Body.String(), `<details class="meal">`)
+	if !found {
+		t.Fatal("the meal should start collapsed")
+	}
+	summary, _, found := strings.Cut(meal, "</summary>")
+	if !found || !strings.Contains(summary, "Обед") || !strings.Contains(summary, "180") ||
+		strings.Contains(summary, "Белки") || strings.Contains(summary, "16,5") {
+		t.Fatalf("the collapsed meal should show its name and calories only: %s", summary)
+	}
 	check(t, request(handler, "GET", "/plans/1/copy", nil), 200, "150", "Основной — копия")
 
 	draft.Set("name", "Тренировочный")
