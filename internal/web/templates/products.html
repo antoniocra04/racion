@@ -1,0 +1,84 @@
+{{define "products"}}
+  <header class="page-heading">
+    <div><h1>Мои продукты</h1><p class="subtitle">КБЖУ на 100 г</p></div>
+    <a class="button primary" href="/products/new">Добавить продукт</a>
+  </header>
+  <form action="/products" method="get" class="search">
+    <label for="query" class="visually-hidden">Поиск по названию</label>
+    <input type="search" id="query" name="q" value="{{.Query}}" placeholder="Название продукта">
+    <button type="submit" class="button">Найти</button>
+    {{if .Query}}<a class="button quiet" href="/products">Сбросить</a>{{end}}
+  </form>
+  {{if .Products}}
+  <ul class="records">
+    {{range .Products}}
+    <li>
+      <div>
+        <a class="record-title" href="/products/{{.ID}}/edit">{{.Name}}</a>
+        {{with .State}} <span class="muted">· {{.}}</span>{{end}}
+        <p class="record-meta">{{template "compact-nutrition" .Per100}}</p>
+      </div>
+      <a class="button quiet" href="/products/{{.ID}}/edit">Изменить</a>
+    </li>
+    {{end}}
+  </ul>
+  {{else if .Query}}<p class="muted">По этому названию ничего не найдено.</p>
+  {{else}}<p class="muted">Добавь первый продукт, чтобы использовать его в рационе.</p>{{end}}
+{{end}}
+
+{{define "product"}}
+  <div class="form-page">
+    <a class="back" href="/products">Все продукты</a>
+    <h1>{{.Title}}</h1>
+    {{if .Error}}<p class="notice" role="alert">{{.Error}}</p>{{end}}
+    <form action="/products/save" method="post" class="form-flow">
+      <input type="hidden" name="id" value="{{.Product.ID}}">
+      <input type="hidden" name="revision" value="{{.Product.Revision}}">
+      {{template "product-fields" .Product}}
+      <div class="actions">
+        <button class="button primary" type="submit">Сохранить продукт</button>
+        <a class="button quiet" href="/products">Отмена</a>
+      </div>
+    </form>
+    {{if .Product.ID}}
+    <details class="danger-zone">
+      <summary>Удалить продукт</summary>
+      <form action="/products/{{.Product.ID}}/delete" method="post">
+        <p>Удалить «{{.Product.Name}}» из справочника?</p>
+        <button type="submit" class="button danger">Подтвердить удаление</button>
+      </form>
+    </details>
+    {{end}}
+  </div>
+{{end}}
+
+{{define "product-fields"}}
+  <input type="hidden" name="product_token" value="{{.Token}}">
+  <div class="field">
+    <label for="{{.NameField}}">Название продукта</label>
+    <input id="{{.NameField}}" name="{{.NameField}}" value="{{.Name}}" maxlength="100" placeholder="Например, рис"{{if .Errors.name}} aria-invalid="true" aria-describedby="product-name-error"{{end}}>
+    {{with .Errors.name}}<p id="product-name-error" class="field-error">{{.}}</p>{{end}}
+  </div>
+  <div class="field">
+    <label for="product-state">В каком виде взвешиваешь</label>
+    <select id="product-state" name="state"{{if .Errors.state}} aria-invalid="true" aria-describedby="product-state-error"{{end}}>
+      <option value="">Без пометки</option>
+      <option value="сухой"{{if eq .State "сухой"}} selected{{end}}>В сухом</option>
+      <option value="сырой"{{if eq .State "сырой"}} selected{{end}}>В сыром</option>
+      <option value="готовый"{{if eq .State "готовый"}} selected{{end}}>В готовом</option>
+    </select>
+    {{with .Errors.state}}<p id="product-state-error" class="field-error">{{.}}</p>{{end}}
+  </div>
+  <fieldset class="nutrition-fields">
+    <legend>Пищевая ценность на 100 г</legend>
+    <div class="number-fields">
+      {{range .Numbers}}
+      <div class="field">
+        <label for="product-{{.Key}}">{{.Label}}</label>
+        <input id="product-{{.Key}}" name="{{.Key}}" inputmode="decimal" value="{{.Value}}" maxlength="16" placeholder="0"{{if .Error}} aria-invalid="true" aria-describedby="error-{{.Key}}"{{end}}>
+        {{if .Error}}<p id="error-{{.Key}}" class="field-error">{{.Error}}</p>{{end}}
+      </div>
+      {{end}}
+    </div>
+  </fieldset>
+{{end}}

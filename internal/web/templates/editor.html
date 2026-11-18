@@ -1,0 +1,80 @@
+{{define "editor"}}
+  <a class="back" href="/plans">К сохранённым рационам</a>
+  <h1>{{.Title}}</h1>
+  {{if .Error}}<p class="notice" role="alert">{{.Error}}</p>{{end}}
+  <form class="editor form-flow" method="post" action="/plans/editor">
+    <input type="hidden" name="id" value="{{.Draft.ID}}">
+    <input type="hidden" name="revision" value="{{.Draft.Revision}}">
+    {{with .Inline}}
+    <button class="visually-hidden" tabindex="-1" type="submit" name="intent" value="save-product:{{.Meal}}:{{.Item}}" formaction="/plans/editor#item-{{.Meal}}-{{.Item}}">Сохранить и выбрать продукт</button>
+    {{end}}
+    <div class="editor-heading">
+      <div class="field">
+        <label for="plan-name">Название рациона</label>
+        <input id="plan-name" name="name" value="{{.Draft.Name}}" maxlength="100" placeholder="Например, основной"{{if .Draft.NameError}} aria-invalid="true" aria-describedby="plan-name-error"{{end}}>
+        {{with .Draft.NameError}}<p id="plan-name-error" class="field-error">{{.}}</p>{{end}}
+      </div>
+      <button class="button primary" type="submit" name="intent" value="save"{{if .Inline}} disabled{{end}}>Сохранить рацион</button>
+    </div>
+    {{range $mi, $meal := .Draft.Meals}}
+    <section class="editor-meal" id="meal-{{$mi}}" aria-label="Приём пищи">
+      <div class="editor-heading">
+        <div class="field">
+          <label for="meal-name-{{$mi}}">Название приёма пищи</label>
+          <input id="meal-name-{{$mi}}" name="meal_name" value="{{$meal.Name}}" maxlength="100" placeholder="Например, обед"{{if $meal.Error}} aria-invalid="true" aria-describedby="meal-error-{{$mi}}"{{end}}>
+          {{with $meal.Error}}<p id="meal-error-{{$mi}}" class="field-error">{{.}}</p>{{end}}
+        </div>
+        <button class="button quiet" type="submit" name="intent" value="remove-meal:{{$mi}}"{{if $.Inline}} disabled{{end}}>Убрать приём</button>
+      </div>
+      {{range $ii, $item := $meal.Items}}
+      <div class="editor-item" id="item-{{$mi}}-{{$ii}}">
+        <div class="item-fields">
+          <div class="field">
+            <label for="product-{{$mi}}-{{$ii}}">Продукт</label>
+            <select id="product-{{$mi}}-{{$ii}}" name="product_{{$mi}}"{{if $item.Error}} aria-describedby="item-error-{{$mi}}-{{$ii}}"{{end}}>
+              <option value="">Выбрать из моих продуктов</option>
+              {{range $.Products}}<option value="{{.ID}}"{{if eq (id .ID) $item.ProductID}} selected{{end}}>{{.Name}}{{with .State}} · {{.}}{{end}}</option>{{end}}
+            </select>
+          </div>
+          <div class="field">
+            <label for="grams-{{$mi}}-{{$ii}}">Вес, г</label>
+            <input id="grams-{{$mi}}-{{$ii}}" name="grams_{{$mi}}" value="{{$item.Grams}}" inputmode="decimal" maxlength="16" placeholder="100"{{if $item.Error}} aria-describedby="item-error-{{$mi}}-{{$ii}}"{{end}}>
+          </div>
+        </div>
+        {{with $item.Error}}<p id="item-error-{{$mi}}-{{$ii}}" class="field-error">{{.}}</p>{{end}}
+        <div class="actions">
+          <button class="button quiet" type="submit" name="intent" value="new-product:{{$mi}}:{{$ii}}" formaction="/plans/editor#item-{{$mi}}-{{$ii}}"{{if $.Inline}} disabled{{end}}>Новый продукт</button>
+          <button class="button quiet" type="submit" name="intent" value="remove-item:{{$mi}}:{{$ii}}" formaction="/plans/editor#meal-{{$mi}}"{{if $.Inline}} disabled{{end}}>Убрать позицию</button>
+        </div>
+        {{with $.Inline}}
+          {{if and (eq .Meal $mi) (eq .Item $ii)}}
+          <div class="inline-form form-flow">
+            <h2>Новый продукт</h2>
+            {{template "product-fields" .Form}}
+            <div class="actions">
+              <button class="button primary" type="submit" name="intent" value="save-product:{{$mi}}:{{$ii}}" formaction="/plans/editor#item-{{$mi}}-{{$ii}}">Сохранить и выбрать</button>
+              <button class="button quiet" type="submit" name="intent" value="cancel-product" formaction="/plans/editor#item-{{$mi}}-{{$ii}}">Отмена</button>
+            </div>
+          </div>
+          {{end}}
+        {{end}}
+      </div>
+      {{end}}
+      <button class="button" type="submit" name="intent" value="add-item:{{$mi}}" formaction="/plans/editor#meal-{{$mi}}"{{if $.Inline}} disabled{{end}}>Добавить продукт</button>
+    </section>
+    {{end}}
+    <div class="actions">
+      <button class="button" type="submit" name="intent" value="add-meal" formaction="/plans/editor#editor-actions"{{if .Inline}} disabled{{end}}>Добавить приём пищи</button>
+      <button id="editor-actions" class="button primary" type="submit" name="intent" value="save"{{if .Inline}} disabled{{end}}>Сохранить рацион</button>
+    </div>
+  </form>
+  {{if .Draft.ID}}
+  <details class="danger-zone">
+    <summary>Удалить рацион</summary>
+    <form action="/plans/{{.Draft.ID}}/delete" method="post">
+      <p>Удалить эту версию рациона?</p>
+      <button type="submit" class="button danger">Подтвердить удаление</button>
+    </form>
+  </details>
+  {{end}}
+{{end}}

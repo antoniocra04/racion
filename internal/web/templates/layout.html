@@ -1,0 +1,54 @@
+{{define "page"}}
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#17392b">
+  <title>{{.Title}} · Рацион</title>
+  <link rel="stylesheet" href="/static/app.css">
+  <script defer src="/static/app.js"></script>
+</head>
+<body>
+  <a class="skip" href="#main">К содержимому</a>
+  <header class="topbar">
+    <div class="frame header-grid">
+      <a href="/" class="brand">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.55" stroke-linecap="round">
+            <circle cx="12" cy="12" r="8.4"/><circle cx="12" cy="12" r="5.1"/><path d="M12 7v5l4 3"/>
+          </svg>
+        </span>
+        Рацион
+      </a>
+      <nav class="navigation" aria-label="Разделы">
+        <a href="/" {{if or (eq .Screen "day") (eq .Screen "editor")}}aria-current="page"{{end}}>Рацион</a>
+        <a href="/plans" {{if eq .Screen "plans"}}aria-current="page"{{end}}>Версии</a>
+        <a href="/products" {{if or (eq .Screen "products") (eq .Screen "product")}}aria-current="page"{{end}}>Продукты</a>
+      </nav>
+      {{if .Plans}}
+      <form class="switcher" action="/plans/activate" method="post" data-switcher>
+        <label class="switcher-label" for="active-plan">Активный рацион</label>
+        <select name="id" id="active-plan">
+          {{range .Plans}}<option value="{{.ID}}"{{if .Active}} selected{{end}}>{{.Name}}</option>{{end}}
+        </select>
+        <button class="button quiet switch-submit" type="submit">Активировать</button>
+      </form>
+      {{end}}
+    </div>
+  </header>
+  <main id="main" class="frame content">
+    {{if eq .Screen "day"}}{{template "day" .}}
+    {{else if eq .Screen "plans"}}{{template "plans" .}}
+    {{else if eq .Screen "products"}}{{template "products" .}}
+    {{else if eq .Screen "product"}}{{template "product" .}}
+    {{else if eq .Screen "editor"}}{{template "editor" .}}
+    {{else}}
+      <h1>Не удалось выполнить действие</h1>
+      <p class="notice" role="alert">{{.Error}}</p>
+      <a class="button" href="/">К активному рациону</a>
+    {{end}}
+  </main>
+</body>
+</html>
+{{end}}

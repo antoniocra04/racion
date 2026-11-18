@@ -1,0 +1,105 @@
+{{define "day"}}
+{{if .Plan}}
+  {{$plan := .Plan}}
+  <header class="page-heading">
+    <div>
+      <h1>Дневной рацион</h1>
+      <p class="subtitle">{{$plan.Name}}{{if $plan.Active}} <span class="active-label">Активный</span>{{end}}</p>
+    </div>
+    <div class="actions">
+      {{if not $plan.Active}}
+      <form action="/plans/activate" method="post">
+        <input type="hidden" name="id" value="{{$plan.ID}}">
+        <button type="submit" class="button primary">Сделать активным</button>
+      </form>
+      {{end}}
+      <a class="button" href="/plans/{{$plan.ID}}/edit">Изменить рацион</a>
+    </div>
+  </header>
+  <div class="day-layout">
+    {{with $plan.Nutrition}}
+    <aside class="day-total" aria-labelledby="total-title">
+      <h2 id="total-title">Итого за день</h2>
+      <p class="energy"><strong>{{kcal .Kcal}}</strong><span>ккал</span></p>
+      <dl class="macro-list">
+        <div><dt>Белки</dt><dd>{{grams .Protein}} <span>г</span></dd></div>
+        <div><dt>Жиры</dt><dd>{{grams .Fat}} <span>г</span></dd></div>
+        <div><dt>Углеводы</dt><dd>{{grams .Carbs}} <span>г</span></dd></div>
+      </dl>
+    </aside>
+    {{end}}
+    <section class="meal-list" aria-labelledby="meals-title">
+      <h2 id="meals-title">Приёмы пищи</h2>
+      {{if $plan.Meals}}
+      <div class="meal-key meal-columns" aria-hidden="true">
+        <span>Приём</span><span>ккал</span><span>Б, г</span><span>Ж, г</span><span>У, г</span><span></span>
+      </div>
+      {{range $plan.Meals}}
+      <details class="meal">
+        <summary class="meal-columns">
+          <span class="meal-name">{{.Name}}</span>
+          {{with .Nutrition}}
+          <span class="meal-energy"><span class="visually-hidden">Калории, </span>{{kcal .Kcal}}<span class="mobile-label" aria-hidden="true"> ккал</span></span>
+          <span class="meal-protein"><span class="visually-hidden">Белки, </span><span class="mobile-label" aria-hidden="true">Б </span>{{grams .Protein}}</span>
+          <span class="meal-fat"><span class="visually-hidden">Жиры, </span><span class="mobile-label" aria-hidden="true">Ж </span>{{grams .Fat}}</span>
+          <span class="meal-carbs"><span class="visually-hidden">Углеводы, </span><span class="mobile-label" aria-hidden="true">У </span>{{grams .Carbs}}</span>
+          {{end}}
+          <span class="chevron" aria-hidden="true"></span>
+        </summary>
+        {{if .Items}}
+        <ul class="ingredients">
+          {{range .Items}}
+          <li>
+            <strong>{{.Product.Name}}{{with .Product.State}} <span class="muted">· {{.}}</span>{{end}}</strong>
+            <span class="weight">{{formNum .Grams}} г</span>
+            <span class="portion muted">{{template "compact-nutrition" .Nutrition}}</span>
+          </li>
+          {{end}}
+        </ul>
+        {{else}}<p class="muted empty-meal">В этом приёме пока нет продуктов.</p>{{end}}
+      </details>
+      {{end}}
+      {{else}}
+      <p class="muted">Добавь приёмы пищи и продукты, чтобы увидеть их КБЖУ.</p>
+      {{end}}
+    </section>
+  </div>
+{{else}}
+  <section class="empty-state">
+    <h1>Дневной рацион</h1>
+    <p class="muted">Добавь свои продукты и граммовки. Рацион будет открываться с сохранённым составом.</p>
+    <a class="button primary" href="/plans/new">Создать рацион</a>
+  </section>
+{{end}}
+{{end}}
+
+{{define "compact-nutrition"}}{{kcal .Kcal}} ккал · Б {{grams .Protein}} · Ж {{grams .Fat}} · У {{grams .Carbs}}{{end}}
+
+{{define "plans"}}
+  <header class="page-heading">
+    <h1>Версии рациона</h1>
+    <a class="button primary" href="/plans/new">Создать рацион</a>
+  </header>
+  {{if .Plans}}
+  <ul class="records">
+    {{range .Plans}}
+    <li>
+      <div>
+        <a class="record-title" href="/plans/{{.ID}}">{{.Name}}</a>
+        {{if .Active}} <span class="active-label">Активный</span>{{end}}
+        <p class="record-meta">{{template "compact-nutrition" .Nutrition}}</p>
+      </div>
+      <div class="actions">
+        {{if not .Active}}
+        <form action="/plans/activate" method="post">
+          <input type="hidden" name="id" value="{{.ID}}">
+          <button class="button" type="submit">Сделать активным</button>
+        </form>
+        {{end}}
+        <a class="button quiet" href="/plans/{{.ID}}/copy">Скопировать</a>
+      </div>
+    </li>
+    {{end}}
+  </ul>
+  {{else}}<p class="muted">Здесь появятся сохранённые рационы.</p>{{end}}
+{{end}}
