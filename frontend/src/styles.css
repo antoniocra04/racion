@@ -1,0 +1,108 @@
+body { margin: 0; }
+
+.ui-page-heading > .ui-actions:has(.plan-switch) { min-width: 0; max-width: 48%; }
+.plan-switch { display: inline-grid; position: relative; min-width: 0; max-width: 100%; }
+.plan-switch select {
+  appearance: none; width: 100%; min-width: 0; min-height: 36px; border: 0;
+  border-radius: 9px; padding: 6px 32px 6px 12px; color: var(--ui-accent);
+  background: var(--ui-raised); cursor: pointer; font-size: 13px; font-weight: 530; text-overflow: ellipsis;
+}
+.plan-switch .ui-icon { position: absolute; right: 9px; top: 50%; transform: translateY(-50%); pointer-events: none; color: var(--ui-accent); }
+.nutrition {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
+  gap: 18px; align-items: center; padding: 18px 22px 17px;
+  border-radius: 15px; background: var(--ui-raised);
+}
+.home-ui .day-energy h2 { font-size: 13px; font-weight: 550; letter-spacing: 0; color: var(--ui-muted); }
+.home-ui .day-kcal { margin-top: 5px; font-weight: 575; font-size: 47px; line-height: 1.08; letter-spacing: -.035em; }
+.day-kcal span { font-size: 16px; color: var(--ui-muted); letter-spacing: 0; }
+.day-macros { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.day-macros > div { padding-inline-start: 14px; border-inline-start: 1px solid var(--ui-line); min-width: 0; }
+.day-macros dt { font-size: 13px; white-space: nowrap; }
+.day-macros dd { font-size: 19px; font-weight: 575; margin-top: 2px; }
+.macro-dot { display: inline-block; width: 6px; height: 6px; margin-right: 5px; border-radius: 50%; background: var(--ui-accent); vertical-align: 2px; }
+.macro-dot--fat { background: #a77943; }
+.macro-dot--carbs { background: #768460; }
+
+.meals { margin-top: 28px; }
+.meals > h2 { margin-bottom: 8px; }
+.meal-list { border-top: 1px solid var(--ui-line); }
+.meal { border-bottom: 1px solid var(--ui-line); }
+.meal summary {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 13px; align-items: center;
+  min-height: 55px; padding: 9px 4px; list-style: none; cursor: pointer;
+  font-size: 16px; font-weight: 620;
+}
+.meal summary::-webkit-details-marker { display: none; }
+.meal summary .meal-kcal { color: var(--ui-muted); font-size: 14px; font-weight: 550; white-space: nowrap; }
+.meal[open] summary { color: var(--ui-accent); }
+.meal[open] summary .ui-icon { rotate: 180deg; }
+.meal-content { margin: 0 0 13px 4px; padding-inline-start: 16px; border-inline-start: 1px solid color-mix(in srgb, var(--ui-line) 83%, var(--ui-accent)); }
+.meal-content .meal-nutrition { display: flex; flex-wrap: wrap; gap: 4px 16px; color: var(--ui-muted); font-size: 13px; padding-block: 3px 4px; }
+.ingredients, .records { list-style: none; padding: 0; margin: 0; }
+.ingredients li { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 9px 4px 9px 0; }
+.ingredients li + li { border-top: 1px solid var(--ui-line); }
+.ingredients strong { font-size: 15px; font-weight: 570; overflow-wrap: anywhere; }
+.ingredients small { display: block; margin-top: 2px; color: var(--ui-muted); font-size: 13px; }
+.ingredient-weight { flex: none; white-space: nowrap; font-weight: 580; }
+
+.empty { display: grid; gap: 11px; justify-items: start; }
+.empty .ui-page-heading { margin-bottom: 0; }
+.page-error { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; }
+.records { border-top: 1px solid var(--ui-line); }
+.home-ui .record {
+  display: flex; justify-content: space-between; align-items: center; gap: 10px 18px;
+  min-height: 65px; padding: 11px 3px; border-bottom: 1px solid var(--ui-line);
+}
+.record > div { min-width: 0; }
+.record strong { font-weight: 600; overflow-wrap: anywhere; }
+.record a:hover, a.product-record:hover .identity { color: var(--ui-accent); }
+.record p { font-size: 13px; }
+.record-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 4px; }
+.product-record:hover { background: var(--ui-raised); }
+.product-macros { text-align: right; }
+
+.fields fieldset { display: grid; gap: 14px; min-inline-size: 0; padding: 0; margin: 0; border: 0; }
+.fields label { display: grid; align-content: start; gap: 5px; min-width: 0; font-weight: 550; }
+.fields input, .fields select {
+  width: 100%; min-width: 0; border: 1px solid var(--ui-line); border-radius: 8px;
+  min-height: 40px; padding: 7px 10px; background: var(--ui-input); color: var(--ui-text);
+}
+.fields [aria-invalid="true"] { border-color: var(--ui-danger); }
+.fields .ui-error { font-size: 13px; }
+.fields > .ui-error { margin-bottom: 12px; }
+.product-form { max-width: 520px; }
+.form-section-label { color: var(--ui-muted); font-size: 13px; }
+.macro-fields { display: grid; gap: 8px; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.energy-output output { font-weight: 620; margin-left: 6px; color: var(--ui-text); }
+.form-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+.product-search { display: block; max-width: 340px; margin-bottom: 13px; }
+.product-delete { border-top: 1px solid var(--ui-line); max-width: 520px; margin-top: 22px; padding-top: 9px; }
+.edit-meals { display: grid; gap: 12px; justify-items: start; }
+.edit-meal { padding: 14px 0 12px; border-top: 1px solid var(--ui-line); width: 100%; }
+.edit-meal-heading, .edit-item { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; align-items: end; }
+.edit-item { grid-template-columns: minmax(0, 1fr) minmax(80px, 22%) auto; margin-top: 12px; }
+.edit-item button, .edit-meal-heading button { min-height: 40px; }
+.editor-add { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 10px; }
+.plan-name { max-width: 520px; }
+.add-product-dialog { width: min(480px, calc(100% - 32px)); padding: 20px; border: 0; border-radius: 14px; background: var(--ui-surface); color: var(--ui-text); }
+.add-product-dialog::backdrop { background: rgb(18 20 24 / 34%); }
+.add-product-dialog h2 { margin-bottom: 14px; }
+
+@media (max-width: 700px) {
+  .nutrition { grid-template-columns: minmax(0, 1fr); gap: 12px; padding: 14px; }
+  .home-ui .day-kcal { font-size: 39px; }
+  .day-macros > div { padding-inline-start: 8px; }
+  .day-macros > div:first-child { padding-inline-start: 0; border: 0; }
+  .day-macros dt { font-size: 12px; }
+  .day-macros dd { font-size: 17px; }
+  .meals { margin-top: 21px; }
+  .meal summary { min-height: 49px; gap: 7px; }
+  .meal summary .meal-kcal { font-size: 13px; }
+  .meal-content { padding-inline-start: 10px; }
+  .ingredients small { font-size: 12px; }
+  .record:has(.record-actions .ui-button) { align-items: start; flex-direction: column; gap: 5px; }
+  .edit-item { grid-template-columns: minmax(0, 1fr) 75px auto; gap: 5px; }
+  .fields input, .fields select { font-size: 16px; }
+  .macro-fields label { font-size: 12px; }
+}

@@ -1,4 +1,4 @@
-package web_test
+package web
 
 import (
 	"context"
@@ -11,7 +11,6 @@ import (
 	"testing"
 
 	"github.com/antoniocra04/racion/internal/store"
-	"github.com/antoniocra04/racion/internal/web"
 )
 
 func TestRationWorkflow(t *testing.T) {
@@ -22,7 +21,7 @@ func TestRationWorkflow(t *testing.T) {
 		t.Fatal(err)
 	}
 	t.Cleanup(func() { db.Close() })
-	handler := web.New(db)
+	handler := newHandler(db, nil)
 	check(t, request(handler, "GET", "/", nil), 200, "Создать рацион")
 
 	form := request(handler, "GET", "/products/new", nil)
@@ -102,7 +101,7 @@ func TestRationWorkflow(t *testing.T) {
 		t.Fatal(err)
 	}
 	defer copy.Close()
-	check(t, request(web.New(copy), "GET", "/", nil), 200, "Тренировочный", "280", "Курица")
+	check(t, request(newHandler(copy, nil), "GET", "/", nil), 200, "Тренировочный", "280", "Курица")
 }
 
 func TestEditorKeepsDraftAndAddsProduct(t *testing.T) {
@@ -111,7 +110,7 @@ func TestEditorKeepsDraftAndAddsProduct(t *testing.T) {
 		t.Fatal(err)
 	}
 	defer db.Close()
-	handler := web.New(db)
+	handler := newHandler(db, nil)
 	newPlan := request(handler, "GET", "/plans/new", nil)
 	if strings.Count(newPlan.Body.String(), ">Сохранить рацион</button>") != 1 {
 		t.Fatal("the create screen needs exactly one save action")

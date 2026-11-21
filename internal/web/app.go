@@ -56,6 +56,10 @@ type page struct {
 }
 
 func New(db *store.Store) http.Handler {
+	return newHandler(db, frontendFiles())
+}
+
+func newHandler(db *store.Store, frontend fs.FS) http.Handler {
 	app := app{store: db}
 	mux := http.NewServeMux()
 	static, err := fs.Sub(assets, "static")
@@ -63,18 +67,21 @@ func New(db *store.Store) http.Handler {
 		panic(err)
 	}
 	mux.Handle("GET /static/", http.StripPrefix("/static/", http.FileServerFS(static)))
-	mux.HandleFunc("GET /{$}", app.viewRation)
-	mux.HandleFunc("GET /plans", app.listPlans)
-	mux.HandleFunc("GET /plans/{id}", app.viewRation)
-	mux.HandleFunc("GET /plans/new", app.openEditor)
-	mux.HandleFunc("GET /plans/{id}/edit", app.openEditor)
-	mux.HandleFunc("GET /plans/{id}/copy", app.openEditor)
+	registerFrontend(mux, frontend, app)
+	mux.HandleFunc("GET /healthz", func(w http.ResponseWriter, _ *http.Request) {
+		_, _ = fmt.Fprintln(w, "ok")
+	})
+	mux.HandleFunc("GET /api/state", app.apiState)
+	mux.HandleFunc("POST /api/plans", app.apiSavePlan)
+	mux.HandleFunc("PUT /api/plans/{id}", app.apiSavePlan)
+	mux.HandleFunc("DELETE /api/plans/{id}", app.apiDeletePlan)
+	mux.HandleFunc("POST /api/plans/{id}/activate", app.apiActivatePlan)
+	mux.HandleFunc("POST /api/products", app.apiSaveProduct)
+	mux.HandleFunc("PUT /api/products/{id}", app.apiSaveProduct)
+	mux.HandleFunc("DELETE /api/products/{id}", app.apiDeleteProduct)
 	mux.HandleFunc("POST /plans/editor", app.updateEditor)
 	mux.HandleFunc("POST /plans/activate", app.activate)
 	mux.HandleFunc("POST /plans/{id}/delete", app.deletePlan)
-	mux.HandleFunc("GET /products", app.listProducts)
-	mux.HandleFunc("GET /products/new", app.openProduct)
-	mux.HandleFunc("GET /products/{id}/edit", app.openProduct)
 	mux.HandleFunc("POST /products/save", app.saveProduct)
 	mux.HandleFunc("POST /products/{id}/delete", app.deleteProduct)
 

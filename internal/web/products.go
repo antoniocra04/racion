@@ -4,6 +4,7 @@ import (
 	"crypto/rand"
 	"errors"
 	"net/http"
+	"net/url"
 	"sort"
 	"strconv"
 	"strings"
@@ -127,12 +128,16 @@ func (a app) saveProduct(w http.ResponseWriter, r *http.Request) {
 }
 
 func readProduct(r *http.Request, nameField string) (ration.Product, productForm, bool) {
+	return productFromValues(r.PostForm, nameField)
+}
+
+func productFromValues(values url.Values, nameField string) (ration.Product, productForm, bool) {
 	form := newProductForm(nameField)
-	if key := r.PostForm.Get("product_token"); key != "" && len(key) <= 128 {
+	if key := values.Get("product_token"); key != "" && len(key) <= 128 {
 		form.Token = key
 	}
-	form.Name = r.PostForm.Get(nameField)
-	form.State = r.PostForm.Get("state")
+	form.Name = values.Get(nameField)
+	form.State = values.Get("state")
 	product := ration.Product{Name: strings.TrimSpace(form.Name), State: form.State}
 	if product.Name == "" || utf8.RuneCountInString(product.Name) > 100 {
 		form.Errors["name"] = "Укажи название длиной от 1 до 100 символов."
@@ -146,7 +151,7 @@ func readProduct(r *http.Request, nameField string) (ration.Product, productForm
 	missingNumber := false
 	for index := range form.Numbers {
 		field := &form.Numbers[index]
-		field.Value = r.PostForm.Get(field.Key)
+		field.Value = values.Get(field.Key)
 		value, ok := decimal(field.Value)
 		if !ok {
 			field.Error = "Введи число от 0 до 1 000 000."

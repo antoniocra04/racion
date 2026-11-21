@@ -6,3 +6,6 @@ ration
 **/*.db-shm
 **/*.db-wal
 **/*.db-journal
+
+frontend/node_modules/
+internal/web/spa/generated/

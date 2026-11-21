@@ -18,6 +18,13 @@ docker compose up -d --build
 
 Docker Compose собирает образ под архитектуру Pi. Контейнер работает от отдельного пользователя. База `/data/ration.db` хранится в томе `ration-data` и сохраняется при пересоздании контейнера.
 
+Чтобы собрать образ вне Pi, скачайте архив `racion-arm64.tar.gz` из GitHub Actions для той же версии проекта. В каталоге проекта на Pi загрузите образ и запустите Compose.
+
+```sh
+docker load -i racion-arm64.tar.gz
+docker compose up -d --no-build --pull never
+```
+
 Обновление выполняется из папки проекта.
 
 ```sh
@@ -81,9 +88,13 @@ sudo chown "$(id -u):$(id -g)" ration-migration.db
 
 ## Локальная разработка
 
-Для локальной разработки нужен Go 1.26 или новее.
+Для локальной разработки нужны Go 1.26 и Node.js 24 LTS. Vite собирает React-интерфейс, Go встраивает его в бинарник и отдаёт вместе с JSON API.
+
+Утверждённый дизайн SPA использует тему `ration` и шрифт Onest из `frontend/vendor/home-ui`. Стили сводки и раскрываемых приёмов пищи находятся в `frontend/src/styles.css`.
 
 ```sh
+npm --prefix frontend ci
+npm --prefix frontend run build
 go run ./cmd/ration
 ```
 

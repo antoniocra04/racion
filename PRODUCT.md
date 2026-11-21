@@ -8,7 +8,7 @@ web
 
 ## Stack
 
-Выбор стека делегирован. Предложение для первой версии — Go, серверные HTML-шаблоны, CSS, небольшой JavaScript и SQLite на Raspberry Pi 5.
+React SPA на TypeScript и Vite. Сервер Go отдаёт интерфейс и JSON API. Данные хранятся в SQLite. Docker Compose на Raspberry Pi 5.
 
 ## Users
 

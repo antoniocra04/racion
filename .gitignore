@@ -6,3 +6,6 @@
 *.db-wal
 *.db-journal
 .DS_Store
+
+/frontend/node_modules/
+/internal/web/spa/generated/
